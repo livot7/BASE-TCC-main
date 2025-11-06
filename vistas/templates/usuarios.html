@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Usuarios</title>
+</head>
+<body>
+    <h1>Usuarios</h1>
+    <ul>
+        {% for usuario in usuarios %}
+            <li>{{ usuario.nome }} ({{usuario.email}})</li>
+        {% endfor %}
+    </ul>
+    <form method="POST">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome" id="nome" />
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" />
+        <button type="submit">Criar</button>
+    </form>
+</body>
+</html>
