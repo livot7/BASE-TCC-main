@@ -2,48 +2,85 @@
 <html lang="pt-BR">
 
 <head>
-    {% include "head_base.html" %}
     <title>Login</title>
+    {% include "head_base.html" %}
 </head>
 
 <body>
     <div class="body-login">
-        <div class="mb-5">
-            <img src=" /image.png" width="430px">
+
+        <div class="container d-flex align-items-center justify-content-center">
+            <div class="col-12 col-sm-8 col-md-8 col-lg-6 mx-auto">
+
+                <div class="sombra">
+                    <img class="img-fluid" src="/static/svgs/logo.svg" alt="">
+                </div>
+            </div>
+
+
+
+
         </div>
 
+        <div class="container d-flex align-items-center justify-content-center">
 
-        <div class="login-card">
-            <form>
-                <div class="text-center mb-4 h1">
-                    <p class="login">Login</p>
+
+            <div class="col-12 col-sm-8 col-md-7 col-lg-5 mx-auto">
+
+                <div class="card-login rounded-5 sombra p-4">
+
+                    <h1 class="text-center mb-4 fw-bold fs-1" style=" color: #8A0303;">Login</h1>
+
+                    <form method="post">
+
+                        <div class="mb-5">
+                            <label for="emailInput" class="form-label fs-3 sombra-leve-texto"
+                                style=" color: #8A0303;">Email:</label>
+                            <input type="email" class="form-control form-control-lg " id="email"
+                                placeholder="Digite seu email:">
+                        </div>
+
+                        <div class="mb-5">
+                            <label for="senhaInput" class="form-label fs-3 sombra-leve-texto "
+                                style=" color: #8A0303;">Senha:</label>
+                            <input type="password" class="form-control form-control-lg" id="senha"
+                                placeholder="Digite sua senha:">
+                        </div>
+
+                        <div class="gap-2 text-center">
+                            <button type="submit" class="hover-scale botao">
+                                Entrar
+
+                            </button>
+                        </div>
+
+
+                    </form>
+
+
                 </div>
 
-                <div class="mb-4">
-                    <label for="emailInput" class="form-label text-logo">Email:</label>
-                    <input type="email" class="form-control p-2" id="emailInput" placeholder="Digite seu email">
-                </div>
 
-                <div class="mb-4">
-                    <label for="passwordInput" class="form-label text-logo">Senha:</label>
-                    <input type="password" class="form-control p-2" id="passwordInput" placeholder="Digite sua senha">
-                </div>
 
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-secondary btn-lg rounded-pill m-5 px-5">Entrar</button>
-                </div>
-            </form>
+            </div>
+
+
+
         </div>
-
-        <p class="copyright fw-light opacity-25 ">
-            Todos os direitos reservados @Verificação Inteligente De Acesso 2025.
-        </p>
-
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-            </script>
+        <footer class="text-center text-light">
+            <p class="fw-lighter  opacity-25">Todos os direitos reservados @ Verificação Inteligente De Acesso</p>
+        </footer>
     </div>
+</body>
+
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+</div>
 </body>
 
 </html>
