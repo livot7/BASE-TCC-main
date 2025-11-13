@@ -36,7 +36,7 @@ a{
     border-radius: 40rem;
 }
 
-.card{
+.card-azul {
     min-width: 275px;
     min-height: 275px;
     color: white;
@@ -44,6 +44,15 @@ a{
     border: none;
     backdrop-filter: blur(15px);
     border-radius: 25px;
+}
+
+.card-informacao {
+    color: white;
+    min-width: 275px;
+    min-height: 146px;
+    background: rgba(0, 0, 0, 16%);
+    border-radius: 25px;
+    border: none;
 }
 
 .card-login {
