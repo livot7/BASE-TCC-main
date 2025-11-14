@@ -3,6 +3,7 @@ from flask_migrate import Migrate
 
 from config import Config
 from modelos.modelo import db
+from modelos import *
 from controladores.controlador_principal import principal_blueprint
 from controladores.controlador_painel import painel_blueprint
 from controladores.controlador_admin import admin_blueprint
