@@ -7,6 +7,9 @@ principal_blueprint = Blueprint("principal", __name__, template_folder="../vista
 
 @principal_blueprint.route("/", methods=["GET", "POST"])
 def index():
+    if session.get("usuario"):
+        return redirect("/painel")
+    
     if request.method == "GET":
         return render_template("login.html")
     
