@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, session
+from flask import Blueprint, request, render_template, redirect, session, flash
 from modelos import Moderador
 from werkzeug.security import check_password_hash
 
@@ -10,6 +10,7 @@ principal_blueprint = Blueprint(
 @principal_blueprint.route("/", methods=["GET", "POST"])
 def index():
     if session.get("usuario"):
+        flash("Você já está logado.", "warning")
         return redirect("/painel")
 
     if request.method == "GET":
@@ -20,10 +21,13 @@ def index():
 
     moderador = Moderador.query.filter_by(email=email).first()
     if moderador is None:
+        flash("Email ou senha incorretos.", "danger")
         return redirect("/")
 
     if not check_password_hash(moderador.senha_hash, senha):
+        flash("Email ou senha incorretos.", "danger")
         return redirect("/")
 
     session["usuario"] = moderador.id
+    flash("Logado com sucesso!", "success")
     return redirect("/painel")

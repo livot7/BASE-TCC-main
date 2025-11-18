@@ -18,11 +18,12 @@
                 </a>
             </div>
         </nav>
+        {% include "flashes.html" %}
         <div class="container text-white text-center mt-5">
             <h1 class="fw-bold">Bem vindo</h1>
             <h4 class="fw-normal">Selecione uma das opções abaixo</h4>
             <div class="container text-center">
-                <div class="row mt-5">
+                <div class="row mt-5 justify-content-center">
                     <div class="col-12 col-md-6 col-xl-3 mb-4">
                         <a class="card card-azul hover-scale" href="#">
                             <div class="card-body d-flex align-items-center flex-column justify-content-center">
@@ -50,20 +51,24 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-12 col-md-6 col-xl-3 mb-4">
-                        <a class="card card-azul hover-scale" href="#">
-                            <div class="card-body d-flex align-items-center flex-column justify-content-center">
-                                <i class="fa-solid fa-shield-halved fa-5x mb-4"></i>
-                                <h4 class="card-title">Administrador</h4>
-                                <span>Acessar painel de admin</span>
-                            </div>
-                        </a>
-                    </div>
+                    {% if moderador.admin %}
+                        <div class="col-12 col-md-6 col-xl-3 mb-4">
+                            <a class="card card-azul hover-scale" href="#">
+                                <div class="card-body d-flex align-items-center flex-column justify-content-center">
+                                    <i class="fa-solid fa-shield-halved fa-5x mb-4"></i>
+                                    <h4 class="card-title">Administrador</h4>
+                                    <span>Acessar painel de admin</span>
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="row mt-5 justify-content-center">
                     <div class="col-12 col-md-6 col-xl-3 mb-4">
                         <div class="card card-informacao">
                             <div class="card-body d-flex align-items-center flex-column justify-content-center">
                                 <h5 class="card-title fw-normal">Total de acessos hoje</h5>
-                                <h2>500</h2>
+                                <h2>{{ acessos_hoje }}</h2>
                             </div>
                         </div>
                     </div>
@@ -71,7 +76,7 @@
                         <div class="card card-informacao">
                             <div class="card-body d-flex align-items-center flex-column justify-content-center">
                                 <h5 class="card-title fw-normal">Clientes ativos</h5>
-                                <h2>500</h2>
+                                <h2>{{ quantidade_clientes }}</h2>
                             </div>
                         </div>
                     </div>
@@ -79,18 +84,20 @@
                         <div class="card card-informacao">
                             <div class="card-body d-flex align-items-center flex-column justify-content-center">
                                 <h5 class="card-title fw-normal">Cartões ativos</h5>
-                                <h2>500</h2>
+                                <h2>{{ quantidade_cartoes }}</h2>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6 col-xl-3 mb-4">
-                        <div class="card card-informacao">
-                            <div class="card-body d-flex align-items-center flex-column justify-content-center">
-                                <h5 class="card-title fw-normal">Moderadores cadastrados</h5>
-                                <h2>500</h2>
+                    {% if moderador.admin %}
+                        <div class="col-12 col-md-6 col-xl-3 mb-4">
+                            <div class="card card-informacao">
+                                <div class="card-body d-flex align-items-center flex-column justify-content-center">
+                                    <h5 class="card-title fw-normal">Moderadores cadastrados</h5>
+                                    <h2>{{ quantidade_moderadores }}</h2>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
