@@ -1,38 +1,34 @@
-a{
+a {
     text-decoration: none;
 }
 
-
 .body-login {
     background: #8f0508;
-    background: radial-gradient(at center bottom, #980104, #3B0A3B);
+    background: radial-gradient(at center bottom, #980104, #3b0a3b);
     font-family: roboto;
     font-size: 30px;
     height: 100vh;
     flex-grow: 1;
-
 }
 
 .body-home {
     background: #8f0508;
-    background: radial-gradient(at center bottom, #980104, #3B0A3B);
+    background: radial-gradient(at center bottom, #980104, #3b0a3b);
     font-family: roboto;
     min-height: 100vh;
-
-
 }
 
-.botao{
+.botao {
     min-width: 220px;
     min-height: 50px;
-    background:linear-gradient(#1D7EDD,#104477);
+    background: linear-gradient(#1d7edd, #104477);
     font-size: 36px;
     color: white;
     border-radius: 40rem;
 }
 
-.botao-sair{
-    border: solid 1px #8A0303;
+.botao-sair {
+    border: solid 1px #8a0303;
     border-radius: 40rem;
 }
 
@@ -40,7 +36,7 @@ a{
     min-width: 275px;
     min-height: 275px;
     color: white;
-    background:linear-gradient(#1D7EDD,#104477);
+    background: linear-gradient(#1d7edd, #104477);
     border: none;
     backdrop-filter: blur(15px);
     border-radius: 25px;
@@ -75,15 +71,14 @@ input.form-control {
 }
 
 .hover-scale {
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out,
+        filter 0.3s ease-in-out;
     cursor: pointer;
-
 }
 
 .hover-scale:hover {
     transform: scale(1.05);
     filter: brightness(1.1);
-
 }
 
 input.form-control:focus {
@@ -103,12 +98,11 @@ footer {
     padding: 15px 0;
 }
 
-
-
 @media (max-width: 576px) {
     .menu-card .card-title {
         font-size: 1.5rem;
     }
+
     .menu-card .card-subtitle {
         font-size: 0.7rem;
     }
@@ -118,7 +112,8 @@ footer {
     /* Centraliza o conteúdo (menu) na tela */
     display: flex;
     flex-direction: column;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
-    flex-grow: 1; /* Ocupa o espaço restante */
+    flex-grow: 1;
+    /* Ocupa o espaço restante */
 }

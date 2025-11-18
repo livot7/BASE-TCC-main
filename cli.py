@@ -6,7 +6,8 @@ from modelos.moderador import Moderador
 
 parser = argparse.ArgumentParser(description="VIA")
 parser.add_argument("--criar_admin", help="Cria um admin", action="store_true")
-parser.add_argument("--criar_moderador", help="Cria um admin", action="store_true")
+parser.add_argument("--criar_moderador",
+                    help="Cria um admin", action="store_true")
 
 args = parser.parse_args()
 

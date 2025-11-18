@@ -1,4 +1,5 @@
-from modelos.modelo import db,Modelo
+from modelos.modelo import db, Modelo
+
 
 class Acesso(Modelo):
     __tablename__ = "acessos"

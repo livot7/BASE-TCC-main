@@ -1,4 +1,4 @@
-from modelos.modelo import db,Modelo
+from modelos.modelo import db, Modelo
 
 
 class Cliente(Modelo):
