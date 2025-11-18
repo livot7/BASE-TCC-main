@@ -6,4 +6,4 @@ admin_blueprint = Blueprint(
 
 @admin_blueprint.route("/painel/admin")
 def painel_admin():
-    return "painel admin"
+    return render_template("admin.html")
