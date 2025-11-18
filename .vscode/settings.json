@@ -9,4 +9,7 @@
     "[css]": {
         "editor.defaultFormatter": "vscode.css-language-features"
     },
+    "[html]": {
+        "editor.defaultFormatter": "monosans.djlint"
+    },
 }
