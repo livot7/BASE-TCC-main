@@ -122,3 +122,7 @@ footer {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.margin-navbar {
+    margin-left: 155px;
+}
