@@ -116,3 +116,9 @@ footer {
     flex-grow: 1;
     /* Ocupa o espaço restante */
 }
+
+.menu {
+    background: linear-gradient(#310A3F, #AA0608);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
