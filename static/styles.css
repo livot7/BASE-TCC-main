@@ -18,6 +18,13 @@ a {
     min-height: 100vh;
 }
 
+.body-adm {
+    background: #8f0508;
+    background: radial-gradient(at center bottom, #980104, #3b0a3b);
+    font-family: roboto;
+    min-height: 100vh;
+}
+
 .botao {
     min-width: 220px;
     min-height: 50px;
