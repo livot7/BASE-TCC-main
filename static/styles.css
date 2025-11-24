@@ -133,3 +133,14 @@ footer {
 .icone-grande {
     font-size: 90px;
 }
+
+.body-geral {
+    background-color: #E5E5E5;
+    font-family: roboto;
+    min-height: 100vh;
+}
+
+.gradiente-navbar {
+    background: linear-gradient(to left, #310A3F, #8A0303);
+    color: white;
+}

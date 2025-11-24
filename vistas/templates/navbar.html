@@ -1,8 +1,11 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary gradiente-navbar nav-underline">
     <div class="container-fluid">
         <div class="navbar-brand px-xl-5">
             <a href="">
-                <img class="hover-scale" src="/static/svgs/logo_vermelha.svg" alt="logo">
+                <img class="hover-scale"
+                     src="/static/svgs/logo_branca.svg"
+                     alt="logo"
+                     width="80%">
             </a>
         </div>
         <button class="navbar-toggler"
@@ -16,32 +19,36 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav gap-4 d-flex">
-                <a class="menu hover-scale d-flex align-items-center gap-2" href="">
+                <a class=" hover-scale d-flex align-items-center gap-2 text-white nav-link {{'active' if request.path == '/' else ''}}"
+                   href="">
                     <i class="material-symbols-outlined fs-1 ">home</i>
                     <span class="fs-4">Home</span>
                 </a>
-                <a class="menu hover-scale d-flex align-items-center gap-2 " href="">
+                <a class=" hover-scale d-flex align-items-center gap-2 text-white nav-link {{'active' if request.path == '/painel/historico' else ''}}"
+                   href="">
                     <i class="material-symbols-outlined fs-1">history</i>
                     <span class="fs-4 ">Histórico</span>
                 </a>
-                <a class="menu hover-scale d-flex align-items-center gap-2 " href="">
+                <a class=" hover-scale d-flex align-items-center gap-2 text-white nav-link {{'active' if request.path == '/painel/clientes' else ''}}"
+                   href="">
                     <i class="material-symbols-outlined fs-1">group</i>
                     <span class="fs-4">Clientes</span>
                 </a>
-                <a class="menu hover-scale d-flex align-items-center gap-2 " href="">
+                <a class=" hover-scale d-flex align-items-center gap-2 text-white nav-link {{'active' if request.path == '/painel/cartoes' else ''}}"
+                   href="">
                     <i class="material-symbols-outlined fs-1">id_card</i>
                     <span class="fs-4">Cartões</span>
                 </a>
-                <a class="menu hover-scale d-flex align-items-center gap-2 " href="">
+                <a class=" hover-scale d-flex align-items-center gap-2 text-white nav-link {{'active' if request.path == '/painel/admin' else ''}}"
+                   href="">
                     <i class="material-symbols-outlined fs-1">shield_person</i>
                     <span class=" fs-4">Admin</span>
                 </a>
             </div>
-            <a class="botao-sair hover-scale px-4 d-flex align-items-center ms-auto"
-               href="/logout"
-               style="color:#8A0303">
-                <span class="fs-4">Sair</span>
-                <i class="fa-solid fa-right-from-bracket ms-3"></i>
+            <a class="botao-sair hover-scale px-4 d-flex align-items-center ms-auto text-white"
+               href="/logout">
+                <span class="fs-4 text-white">Sair</span>
+                <i class="material-symbols-outlined fs-2 ms-3 text-white">move_item</i>
             </a>
         </div>
     </nav>

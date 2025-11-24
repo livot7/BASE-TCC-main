@@ -29,3 +29,8 @@ def painel_home():
 def logout():
     session.clear()
     return redirect("/")
+
+
+@painel_blueprint.route("/painel/historico")
+def painel_historico():
+    return render_template("historico.html")
