@@ -34,3 +34,8 @@ def logout():
 @painel_blueprint.route("/painel/historico")
 def painel_historico():
     return render_template("historico.html")
+
+
+@painel_blueprint.route("/painel/admin")
+def painel_admin():
+    return render_template("admin.html")
