@@ -39,3 +39,8 @@ def painel_historico():
 @painel_blueprint.route("/painel/admin")
 def painel_admin():
     return render_template("admin.html")
+
+
+@painel_blueprint.route("/painel/criar_moderador")
+def painel_criar_moderador():
+    return render_template("criar_moderador.html")
