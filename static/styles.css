@@ -159,24 +159,29 @@ footer {
 
 }
 
-<<<<<<< HEAD
 .card-filtro {
     width: 150px;
     height: 40px;
     background-color: white;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     border-radius: 10px;
+}
 
-=======
 .circulo {
     width: 60px;
     height: 60px;
-    background-color: #787b7d;
-    border-radius: 100%;
-
+    border-radius: 50%;
+    background: #787b7D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
 }
 
 .botao-cadastar {
-    margin-left: 65px;
->>>>>>> 2e68597e1043d5a0c9a8868121b8274c2a5e33e3
+    margin-right: 75px;
+}
+
+.checkbox-centro {
+    justify-self: center;
 }

@@ -8,24 +8,23 @@
         <div class="body-geral">
             {% include "navbar.html" %}
             <div class="container d-flex align-items-center justify-content-center mt-4">
-                <div class="col-12 col-sm-8 col-md-7 col-lg-5 mx-auto ">
-                    {% include "flashes.html" %}
+                <div class="col-12 col-sm-8 col-md-7 col-lg-5 mx-auto">
                     <div class="card-login rounded-5 sombra p-4 justify-content-center">
-                        <h1 class="text-center mb-4 fw-bold fs-1" style=" color: #8A0303;">Criar Moderador</h1>
+                        <h1 class="text-center mb-4 fw-bold fs-1" style="color: #8A0303;">Criar Moderador</h1>
                         <form method="post">
                             <div class="mb-4">
                                 <label for="email"
                                        class="form-label fs-3 sombra-leve-texto"
                                        style="color: #8A0303">Nome:</label>
                                 <input type="email"
-                                       class="form-control form-control-lg "
+                                       class="form-control form-control-lg"
                                        id="email"
                                        name="email"
                                        placeholder="Digite o nome do moderador:">
                             </div>
                             <div class="mb-4">
                                 <label for="senha"
-                                       class="form-label fs-3 sombra-leve-texto "
+                                       class="form-label fs-3 sombra-leve-texto"
                                        style="color: #8A0303">Email:</label>
                                 <input type="password"
                                        class="form-control form-control-lg"
@@ -33,7 +32,7 @@
                                        name="senha"
                                        placeholder="Digite o email do moderador:">
                             </div>
-                            <div class="form-check fs-3 d-flex justify-content-center">
+                            <div class="form-check fs-3 mb-4 checkbox-centro">
                                 <input class="form-check-input custom-check"
                                        type="checkbox"
                                        id="adm"
@@ -42,21 +41,24 @@
                                        style="color: #8A0303"
                                        for="adm">Administrador</label>
                             </div>
-                            <div class="container-fluid">
-                                <a href="" class="d-inline-flex">
-                                    <div class="circulo hover-scale">
-                                        <i class="material-symbols-outlined">subdirectory_arrow_left</i>
+                            <div class="row align-items-center mt-4 mb-5">
+                                <div class="col-2 text-start">
+                                    <a href="" class="d-inline-flex align-items-center">
+                                        <div class="circulo hover-scale">
+                                            <i class="material-symbols-outlined fs-1">subdirectory_arrow_left</i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-10 text-center">
+                                    <div class="botao-cadastrar botao-cadastar ">
+                                        <button type="submit" class="hover-scale botao ">Cadastrar</button>
                                     </div>
-                                    <div class="botao-cadastar d-flex justify-content-center">
-                                        <button type="submit" class="hover-scale botao">Cadastrar</button>
-                                    </div>
-                                </a>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
