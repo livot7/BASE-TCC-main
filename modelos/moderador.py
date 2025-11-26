@@ -6,8 +6,12 @@ class Moderador(Modelo):
 
     nome = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    senha_hash = db.Column(db.String(120), nullable=False, unique=True)
+    senha_hash = db.Column(db.String(512), nullable=False)
     admin = db.Column(db.Boolean, nullable=False)
+
+    def salvar(self):
+        db.session.add(self)
+        db.session.commit()
 
     def verificar_usuario(self):
         pass

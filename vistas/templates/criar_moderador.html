@@ -7,37 +7,40 @@
     <body>
         <div class="body-geral">
             {% include "navbar.html" %}
+            {%include "flashes.html"%}
             <div class="container d-flex align-items-center justify-content-center mt-4">
                 <div class="col-12 col-sm-8 col-md-7 col-lg-5 mx-auto">
                     <div class="card-login rounded-5 sombra p-4 justify-content-center">
                         <h1 class="text-center mb-4 fw-bold fs-1" style="color: #8A0303;">Criar Moderador</h1>
                         <form method="post">
                             <div class="mb-4">
-                                <label for="email"
+                                <label for="nome"
                                        class="form-label fs-3 sombra-leve-texto"
                                        style="color: #8A0303">Nome:</label>
-                                <input type="email"
+                                <input type="nome"
                                        class="form-control form-control-lg"
-                                       id="email"
-                                       name="email"
-                                       placeholder="Digite o nome do moderador:">
+                                       id="nome"
+                                       name="nome"
+                                       placeholder="Digite o nome do moderador:"
+                                       required>
                             </div>
                             <div class="mb-4">
                                 <label for="senha"
                                        class="form-label fs-3 sombra-leve-texto"
                                        style="color: #8A0303">Email:</label>
-                                <input type="password"
+                                <input type="email"
                                        class="form-control form-control-lg"
-                                       id="senha"
-                                       name="senha"
+                                       id="email"
+                                       name="email"
                                        placeholder="Digite o email do moderador:">
                             </div>
                             <div class="form-check fs-3 mb-4 checkbox-centro">
                                 <input class="form-check-input custom-check"
                                        type="checkbox"
                                        id="adm"
-                                       name="administrador">
-                                <label class="form-check-label custom-label ms-2"
+                                       name="administrador"
+                                       value="1">
+                                <label class="form-check-label custom-label ms-2 sombra-leve-texto"
                                        style="color: #8A0303"
                                        for="adm">Administrador</label>
                             </div>
