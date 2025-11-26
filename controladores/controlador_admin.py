@@ -23,11 +23,7 @@ def painel_criar_moderador():
 
     nome = request.form["nome"]
     email = request.form["email"]
-    checkbox = request.form.get("administrador", 0)
-    if checkbox == 0:
-        checkbox = False
-    else:
-        checkbox = True
+    checkbox = request.form.get("administrador", "0") == "1"
 
     if Moderador.query.filter_by(email=email).first():
         flash("Esse moderador já existe", "warning")
