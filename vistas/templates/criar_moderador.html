@@ -7,7 +7,7 @@
     <body>
         <div class="body-geral">
             {% include "navbar.html" %}
-            {%include "flashes.html"%}
+            {% include "flashes.html" %}
             <div class="container d-flex align-items-center justify-content-center mt-4">
                 <div class="col-12 col-sm-8 col-md-7 col-lg-5 mx-auto">
                     <div class="card-login rounded-5 sombra p-4 justify-content-center">
@@ -22,17 +22,20 @@
                                        id="nome"
                                        name="nome"
                                        placeholder="Digite o nome do moderador:"
+                                       maxlength="120"
                                        required>
                             </div>
                             <div class="mb-4">
-                                <label for="senha"
+                                <label for="email"
                                        class="form-label fs-3 sombra-leve-texto"
                                        style="color: #8A0303">Email:</label>
                                 <input type="email"
                                        class="form-control form-control-lg"
                                        id="email"
                                        name="email"
-                                       placeholder="Digite o email do moderador:">
+                                       placeholder="Digite o email do moderador:"
+                                       maxlength="120"
+                                       required>
                             </div>
                             <div class="form-check fs-3 mb-4 checkbox-centro">
                                 <input class="form-check-input custom-check"
