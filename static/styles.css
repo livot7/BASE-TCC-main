@@ -92,12 +92,15 @@ input.form-control:focus {
     transform: translateY(5px) scale(1.1);
 }
 
+
 footer {
     position: fixed;
     bottom: 0;
     width: 100%;
     padding: 15px 0;
 }
+
+
 
 @media (max-width: 576px) {
     .menu-card .card-title {
@@ -144,17 +147,57 @@ footer {
     width: 100%;
     height: 100px;
     background-color: white;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+
 }
 
+/* ---------------------------------------------------- */
+/* 1. ESTILO BASE (.input-busca) */
+/* ---------------------------------------------------- */
 .input-busca {
     background-color: #E5E5E5;
-    border: none;
-    width: 1000px;
+    width: 100%;
     max-width: 100%;
     height: 50px;
     border-radius: 15px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    border: none;
 
+    /* Sombra Original (ajustada para um visual mais limpo e sutil) */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+
+    /* 🔑 ESSENCIAL: Transição suave para TODAS as propriedades, incluindo transform */
+    transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+    /* Garante que o contorno padrão do navegador seja removido */
+    outline: none;
+
+    /* Garante que a transformação não afete a posição de outros elementos */
+    will-change: transform;
+}
+
+/* ---------------------------------------------------- */
+/* 2. ESTILO DE FOCO (:focus) - Incluindo Transform */
+/* ---------------------------------------------------- */
+.input-busca:focus {
+    /* Remove a sombra externa/padrão ao focar (se houver) */
+    box-shadow: none;
+
+    /* 🎨 EFEITO PRINCIPAL: Sombra interna sutil para o foco */
+    /* Cria um contorno cinza suave e limpo */
+    box-shadow: inset 0 0 0 1px #999999,
+        /* Contorno interno */
+        0 1px 3px rgba(0, 0, 0, 0.1);
+    /* Mantém uma sombra externa suave */
+
+    /* Opcional: Muda o fundo para branco quando focado */
+    background-color: #FFFFFF;
+
+    /* 🚀 ANIMAÇÃO DE TRANSFORM: Reduz o input em 2% para simular um "clique" */
+    transform: scale(0.98);
+    /* Reduz para 98% do tamanho original */
+
+    /* Garante que o contorno nativo do navegador seja sempre removido */
+    outline: none;
 }
 
 .card-filtro {
@@ -242,4 +285,120 @@ footer {
 
 .alert .btn-close {
     filter: invert(1);
+}
+
+.container-tabela {
+    max-height: 500px;
+    background-color: white;
+
+}
+
+.numero-navegacao {
+    width: 40px;
+    height: 40px;
+    background-color: #ffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.proximo-e-anterior {
+    width: 90px;
+    height: 40px;
+    background-color: #ffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------------------------------------------------- */
+/* 1. Transição Suave e Estilo Base (Atualizado) */
+/* ---------------------------------------------------- */
+
+.numero-navegacao,
+.proximo-e-anterior {
+    /* ... (outras propriedades como width, height, box-shadow, etc.) ... */
+
+    /* 🔑 ESSENCIAL: Garante a transição suave de 0.3s para ambas as classes */
+    transition: all 0.3s ease-in-out;
+}
+
+/* ---------------------------------------------------- */
+/* 2. EFEITO HOVER COMBINADO (Vermelho Bordô) */
+/* ---------------------------------------------------- */
+
+.numero-navegacao:not(.active):not(.disabled):hover,
+.proximo-e-anterior:hover {
+
+    /* 🔴 Cor Sólida: Bordô Escuro */
+    background-color: #A52A2A;
+
+    /* ⚪ Mudar a cor do texto para branco */
+    color: #FFFFFF;
+
+    /* Efeito de elevação sutil no hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+
+@media (max-width: 767.98px) {
+    /* ... (outras regras) ... */
+
+    /* Regras específicas para o botão Exportar (.botao) */
+    .botao {
+        /* Remove o min-width para que ele respeite o w-50 do Bootstrap */
+        min-width: unset;
+
+        /* Reduz a altura */
+        min-height: 40px;
+
+        /* Reduz drasticamente a fonte para caber no 50% da tela */
+        font-size: 1rem !important;
+
+        /* Ajusta o padding para centralizar melhor o conteúdo */
+        padding: .5rem 1rem !important;
+    }
+
+    /* Ajuste para o ícone (download) */
+    .botao>i {
+        margin-right: .5rem !important;
+        /* Reduz o espaçamento do ícone */
+        font-size: 1.2rem !important;
+        /* Garante que o ícone não seja muito grande */
+    }
+
+    /* Ajuste para o botão Filtros (para ser consistente) */
+    .btn-outline-secondary {
+        min-height: 40px;
+        font-size: 1rem !important;
+        padding: .5rem 1rem !important;
+    }
+}
+
+
+
+.status-tabela-ativo {
+    width: 60px;
+    height: 25px;
+    background-color: #097E3E;
+    border-radius: 10px;
+}
+
+.status-tabela-inativo {
+    width: 60px;
+    height: 25px;
+    background-color: #ff0000;
+    border-radius: 10px;
+}
+
+.editar-tabela {
+    width: 80px;
+    height: 25px;
+    background-color: #3B82F6;
+    border-radius: 10px;
+}
+
+.alterar-senha-tabela {
+    width: 120px;
+    height: 25px;
+    background-color: #7C3AED;
+    border-radius: 10px;
 }
