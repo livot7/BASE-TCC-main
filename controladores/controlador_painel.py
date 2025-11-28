@@ -36,7 +36,10 @@ def painel_historico():
     return render_template("historico.html")
 
 
-@painel_blueprint.route("/painel/cartoes")
-def painel_cartao():
-    cartoes = Cartao.query.all()
-    return render_template("cartoes.html", cartoes=cartoes)
+@painel_blueprint.route("/painel/cartoes/<int:pagina>", methods=["GET", "POST"])
+def painel_cartao(pagina):
+    if request.method == "GET":
+        cartoes = Cartao.query.paginate(
+            per_page=10, page=pagina, error_out=False)
+
+        return render_template("cartoes.html", cartoes=cartoes, page=pagina)
