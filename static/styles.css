@@ -402,3 +402,13 @@ footer {
     background-color: #7C3AED;
     border-radius: 10px;
 }
+
+.botao-modal {
+    background: transparent;
+    border: none;
+}
+
+.checkbox-grande {
+    transform: scale(1.5);
+    cursor: pointer;
+}

@@ -64,7 +64,7 @@
                 <div class="container text-center">
                     <div class="row mt-5 justify-content-center">
                         <div class="col-12 col-md-6 col-xl-3 mb-4">
-                            <a class="card card-azul hover-scale" href="/painel/admin/ver_moderadores">
+                            <a class="card card-azul hover-scale" href="{{ url_for('admin.painel_ver_moderadores', pagina=1) }}">
                                 <div class="card-body d-flex align-items-center flex-column justify-content-center">
                                     <i class="material-symbols-outlined icone-grande mb-3">manage_accounts</i>
                                     <h4 class="card-title">Ver Moderadores</h4>

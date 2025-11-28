@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, session, flash
+from flask import Blueprint, request, render_template, redirect, session, flash, jsonify, url_for
 from modelos import Moderador
 
 admin_blueprint = Blueprint(
@@ -21,11 +21,35 @@ def painel_admin():
     return render_template("admin.html")
 
 
-@admin_blueprint.route("/painel/admin/ver_moderadores")
-def painel_ver_moderadores():
-    moderadores = Moderador.query.all()
-    print(moderadores)
-    return render_template("ver_moderadores.html", moderadores=moderadores)
+@admin_blueprint.route("/painel/admin/ver_moderadores/<int:pagina>", methods=["GET", "POST"])
+def painel_ver_moderadores(pagina):
+    if request.method == "GET":
+        moderadores = Moderador.query.paginate(
+            per_page=10, page=pagina, error_out=False)
+        return render_template("ver_moderadores.html", moderadores=moderadores, page=pagina)
+
+
+@admin_blueprint.route("/painel/admin/editar_moderador/<int:id>", methods=["POST"])
+def editar_moderador(id):
+    dados = request.get_json()
+
+    moderador = Moderador.query.get_or_404(id)
+
+    novo_moderador = Moderador(
+        nome=dados.get("nome"),
+        email=dados.get("email"),
+        senha_hash=dados.get("senha_hash"),
+        admin=dados.get("admin", 0) == 1,
+        ativo=dados.get("ativo", 0) == 1
+    )
+    novo_moderador.salvar()
+
+    return jsonify({
+        "id": id,
+        "nome": moderador.nome,
+        "admin": moderador.admin,
+        "ativo": moderador.ativo
+    })
 
 
 @admin_blueprint.route("/painel/admin/criar_moderador", methods=["GET", "POST"])

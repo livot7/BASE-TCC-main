@@ -54,46 +54,47 @@
                                 <th scope="col">Status</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
-
-
-
                             </tr>
                         </thead>
                         <tbody>
-                            {% for moderador in moderadores %}
+
+                            {% for moderador in moderadores.items %}
                             <tr>
-                                <th scope="row">{{moderador.id}}</th>
-                                <td>{{moderador.nome}}</td>
-                                <td>{{moderador.email}}</td>
-                                <td>{% if moderador.admin==True %}
+                                <th scope="row">{{ moderador.id }}</th>
+                                <td>{{ moderador.nome }}</td>
+                                <td>{{ moderador.email }}</td>
+                                <td>
+                                    {% if moderador.admin %}
                                     Administrador
                                     {% else %}
                                     Moderador
-                                    {% endif %}</td>
-                                <td>{% if moderador.ativo==True %}
-                                    <div class=" fw-bold status-tabela-ativo  d-flex justify-content-center text-white">
-                                        Ativo</div>
-                                    {% else %}
-                                    <div
-                                        class=" fw-bold status-tabela-inativo  d-flex justify-content-center text-white">
-                                        Inativo</div>
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <div class=" fw-bold editar-tabela  d-flex justify-content-center text-white hover-scale"><i
-                                            class="bi bi-pencil"> Editar</i>
+                                    {% if moderador.ativo %}
+                                    <div class="fw-bold status-tabela-ativo d-flex justify-content-center text-white">
+                                        Ativo
+                                    </div>
+                                    {% else %}
+                                    <div class="fw-bold status-tabela-inativo d-flex justify-content-center text-white">
+                                        Inativo
+                                    </div>
+                                    {% endif %}
                                 </td>
 
                                 <td>
-                                    <div class=" fw-bold alterar-senha-tabela  d-flex justify-content-center text-white hover-scale"><i
-                                            class="bi bi-lock"> Alterar senha</i>
+                                    {% include "editar_moderador_modal.html" %}
                                 </td>
 
-
+                                <td>
+                                    <div
+                                        class="fw-bold alterar-senha-tabela d-flex justify-content-center text-white hover-scale">
+                                        <i class="bi bi-lock"> Alterar senha</i>
+                                    </div>
+                                </td>
 
                             </tr>
                             {% endfor %}
-
 
                         </tbody>
                     </table>
@@ -102,43 +103,26 @@
             </div>
         </div>
 
-        <nav aria-label="Navegação de Página" class="d-flex justify-content-center mt-3 mb-5">
+        <nav aria-label="page-navegation" class="d-flex justify-content-center mt-3 mb-5">
             <ul class="pagination pagination-md d-flex gap-2">
-
-                <li class="page-item proximo-e-anterior hover-scale">
+                <li class="page-item proximo-e-anterior hover-scale 
+            {% if not moderadores.has_prev %}disabled opacity-25 pe-none{% endif %}">
                     <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
-                        href="#">
+                        href="{{ url_for('admin.painel_ver_moderadores', pagina=moderadores.prev_num) if moderadores.has_prev else '#' }}">
                         <span class="fw-bold fs-6 text-black">Anterior</span>
                     </a>
                 </li>
 
-                <li class="page-item numero-navegacao hover-scale">
-                    <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
-                        href="#">
-                        <span class="fw-bold fs-6 text-black">1</span>
-                    </a>
-                </li>
 
-                <li class="page-item numero-navegacao hover-scale">
-                    <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
-                        href="#">
-                        <span class="fw-bold fs-6 text-black">2</span>
-                    </a>
-                </li>
 
-                <li class="page-item numero-navegacao hover-scale">
+                <li class="page-item proximo-e-anterior hover-scale 
+                    {% if not moderadores.has_next %}disabled opacity-25 pe-none{% endif %}">
                     <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
-                        href="#">
-                        <span class="fw-bold fs-6 text-black">3</span>
-                    </a>
-                </li>
-
-                <li class="page-item proximo-e-anterior hover-scale">
-                    <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
-                        href="#">
+                        href="{{ url_for('admin.painel_ver_moderadores', pagina=moderadores.next_num) if moderadores.has_next else '#' }}">
                         <span class="fw-bold fs-6 text-black">Próximo</span>
                     </a>
                 </li>
+
 
             </ul>
         </nav>

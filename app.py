@@ -20,5 +20,22 @@ app.register_blueprint(principal_blueprint)
 app.register_blueprint(painel_blueprint)
 app.register_blueprint(admin_blueprint)
 
+
+def preguiça():
+    for i in range(30):
+        nome = "preguicinha"
+        email = f"paulo{i+1}@gmail.com"
+        novo = Moderador(
+            nome=nome,
+            email=email,
+            senha_hash="teste123",
+            admin=False,
+            ativo=True
+        )
+
+        novo.salvar()
+        print("Contas criadas")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
