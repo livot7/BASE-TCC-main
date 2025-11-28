@@ -8,6 +8,7 @@ admin_blueprint = Blueprint(
 @admin_blueprint.before_request
 def admin_before_request():
     if session.get("usuario") is None:
+        flash("Você não está logado", "danger")
         return redirect("/")
     moderador = Moderador.query.filter_by(id=session.get("usuario")).first()
     print(moderador.nome)

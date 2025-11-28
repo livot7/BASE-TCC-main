@@ -37,5 +37,17 @@ def preguiça():
         print("Contas criadas")
 
 
+def preguiça_2():
+    for i in range(30):
+        novo = Cartao(
+            dono_id=1,
+            chave_cartao=i+1,
+            tem_acesso=True
+        )
+
+        novo.salvar()
+        print("Contas criadas")
+
+
 if __name__ == "__main__":
     app.run(debug=True)

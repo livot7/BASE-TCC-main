@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% include "head_base.html" %}
+        <title>Cartões</title>
+    </head>
+    <body>
+        <div class="body-geral">
+            {% include "navbar.html" %}
+            <div class="container mt-5">
+                <div class="d-flex flex-column flex-md-row align-items-center bg-light p-3 rounded-3 shadow-sm">
+                    <form class="d-flex align-items-center flex-grow-1 w-100 mb-2 mb-md-0 me-md-3"
+                          role="search">
+                        <span class="material-symbols-outlined fs-1 me-2 text-muted">search</span>
+                        <input class="w-100 input-busca"
+                               type="search"
+                               placeholder="Buscar moderador..."
+                               aria-label="Buscar">
+                    </form>
+                    <div class="d-flex w-100 w-md-auto justify-content-between justify-content-md-end">
+                        <button class="btn btn-outline-secondary d-flex align-items-center me-2 py-2 w-50 w-md-auto hover-scale "
+                                type="button">
+                            <i class="bi bi-funnel me-1 fs-4"></i>
+                            Filtros
+                        </button>
+                        <button class="btn btn-primary d-flex botao hover-scale align-items-center py-2 fs-4 rounded-3 justify-content-center w-50 w-md-auto"
+                                type="button">
+                            <i class="bi bi-download me-3 text-center"></i>
+                            Exportar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="container mt-5">
+                <div class="bg-light p-3 rounded-3 shadow-sm">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Numero do cartão</th>
+                                    <th scope="col">Proprietário</th>
+                                    <th scope="col">Data de registro</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cartao in cartoes %}
+                                    <tr>
+                                        <th scope="row">{{ cartao.dono_id }}</th>
+                                        <td>{{ cartao.chave_cartao }}</td>
+                                        <td>{{ cartao.tem_acesso }}</td>
+                                        <td>
+                                            {% if cartao.tem_acesso %}
+                                                <div class="fw-bold status-tabela-ativo d-flex justify-content-center text-white">Ativo</div>
+                                            {% else %}
+                                                <div class="fw-bold status-tabela-inativo d-flex justify-content-center text-white">Inativo</div>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <nav aria-label="page-navegation"
+                 class="d-flex justify-content-center mt-3 mb-5">
+                <ul class="pagination pagination-md d-flex gap-2">
+                    <li class="page-item proximo-e-anterior hover-scale {% if not cartoes.has_prev %}disabled opacity-25 pe-none{% endif %}">
+                        <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
+                           href="{{ url_for('painel.painel_cartao', pagina=cartoes.prev_num) if cartoes.has_prev else '#' }}">
+                            <span class="fw-bold fs-6 text-black">Anterior</span>
+                        </a>
+                    </li>
+                    <li class="page-item proximo-e-anterior hover-scale {% if not cartoes.has_next %}disabled opacity-25 pe-none{% endif %}">
+                        <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
+                           href="{{ url_for('painel.painel_cartao', pagina=cartoes.next_num) if cartoes.has_next else '#' }}">
+                            <span class="fw-bold fs-6 text-black">Próximo</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </body>
+</html>
