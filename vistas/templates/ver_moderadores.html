@@ -1,134 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    {% include "head_base.html" %}
-    <title>Histórico</title>
-</head>
-
-<body>
-    <div class="body-geral">
-        {% include "navbar.html" %}
-
-        <div class="container mt-5">
-            <div class="d-flex flex-column flex-md-row align-items-center bg-light p-3 rounded-3 shadow-sm">
-
-                <form class="d-flex align-items-center flex-grow-1 w-100 mb-2 mb-md-0 me-md-3" role="search">
-                    <span class="material-symbols-outlined fs-1 me-2 text-muted">search</span>
-
-                    <input class="w-100 input-busca" type="search" placeholder="Buscar moderador..."
-                        aria-label="Buscar">
-                </form>
-
-                <div class="d-flex w-100 w-md-auto justify-content-between justify-content-md-end">
-
-                    <button
-                        class="btn btn-outline-secondary d-flex align-items-center me-2 py-2 w-50 w-md-auto hover-scale "
-                        type="button">
-                        <i class="bi bi-funnel me-1 fs-4"></i>
-                        Filtros
-                    </button>
-
-                    <button
-                        class="btn btn-primary d-flex botao hover-scale align-items-center py-2 fs-4 rounded-3 justify-content-center w-50 w-md-auto"
-                        type="button">
-                        <i class="bi bi-download me-3 text-center"></i>
-                        Exportar
-                    </button>
-
+    <head>
+        {% include "head_base.html" %}
+        <title>Histórico</title>
+    </head>
+    <body>
+        <div class="body-geral">
+            {% include "navbar.html" %}
+            <div class="container mt-5">
+                <div class="d-flex flex-column flex-md-row align-items-center bg-light p-3 rounded-3 shadow-sm">
+                    <form class="d-flex align-items-center flex-grow-1 w-100 mb-2 mb-md-0 me-md-3"
+                          role="search">
+                        <span class="material-symbols-outlined fs-1 me-2 text-muted">search</span>
+                        <input class="w-100 input-busca"
+                               type="search"
+                               placeholder="Buscar moderador..."
+                               aria-label="Buscar">
+                    </form>
+                    <div class="d-flex w-100 w-md-auto justify-content-between justify-content-md-end">
+                        <button class="btn btn-outline-secondary d-flex align-items-center me-2 py-2 w-50 w-md-auto hover-scale "
+                                type="button">
+                            <i class="bi bi-funnel me-1 fs-4"></i>
+                            Filtros
+                        </button>
+                        <button class="btn btn-primary d-flex botao hover-scale align-items-center py-2 fs-4 rounded-3 justify-content-center w-50 w-md-auto"
+                                type="button">
+                            <i class="bi bi-download me-3 text-center"></i>
+                            Exportar
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="container mt-5">
-            <div class="bg-light p-3 rounded-3 shadow-sm">
-
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Cargo</th>
-                                <th scope="col">Status</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            {% for moderador in moderadores.items %}
-                            <tr>
-                                <th scope="row">{{ moderador.id }}</th>
-                                <td>{{ moderador.nome }}</td>
-                                <td>{{ moderador.email }}</td>
-                                <td>
-                                    {% if moderador.admin %}
-                                    Administrador
-                                    {% else %}
-                                    Moderador
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if moderador.ativo %}
-                                    <div class="fw-bold status-tabela-ativo d-flex justify-content-center text-white">
-                                        Ativo
-                                    </div>
-                                    {% else %}
-                                    <div class="fw-bold status-tabela-inativo d-flex justify-content-center text-white">
-                                        Inativo
-                                    </div>
-                                    {% endif %}
-                                </td>
-
-                                <td>
-                                    {% include "editar_moderador_modal.html" %}
-                                </td>
-
-                                <td>
-                                    <div
-                                        class="fw-bold alterar-senha-tabela d-flex justify-content-center text-white hover-scale">
-                                        <i class="bi bi-lock"> Alterar senha</i>
-                                    </div>
-                                </td>
-
-                            </tr>
-                            {% endfor %}
-
-                        </tbody>
-                    </table>
+            <div class="container mt-5">
+                <div class="bg-light p-3 rounded-3 shadow-sm">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Cargo</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for moderador in moderadores.items %}
+                                    <tr>
+                                        <th scope="row">{{ moderador.id }}</th>
+                                        <td>{{ moderador.nome }}</td>
+                                        <td>{{ moderador.email }}</td>
+                                        <td>
+                                            {% if moderador.admin %}
+                                                Administrador
+                                            {% else %}
+                                                Moderador
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if moderador.ativo %}
+                                                <div class="fw-bold status-tabela-ativo d-flex justify-content-center text-white">Ativo</div>
+                                            {% else %}
+                                                <div class="fw-bold status-tabela-inativo d-flex justify-content-center text-white">Inativo</div>
+                                            {% endif %}
+                                        </td>
+                                        <td>{% include "editar_moderador_modal.html" %}</td>
+                                        <td>
+                                            <div class="fw-bold alterar-senha-tabela d-flex justify-content-center text-white hover-scale">
+                                                <i class="bi bi-lock"> Alterar senha</i>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
             </div>
+            <nav aria-label="page-navegation"
+                 class="d-flex justify-content-center mt-3 mb-5">
+                <ul class="pagination pagination-md d-flex gap-2">
+                    <li class="page-item proximo-e-anterior hover-scale {% if not moderadores.has_prev %}disabled opacity-25 pe-none{% endif %}">
+                        <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
+                           href="{{ url_for('admin.painel_ver_moderadores', pagina=moderadores.prev_num) if moderadores.has_prev else '#' }}">
+                            <span class="fw-bold fs-6 text-black">Anterior</span>
+                        </a>
+                    </li>
+                    <li class="page-item proximo-e-anterior hover-scale {% if not moderadores.has_next %}disabled opacity-25 pe-none{% endif %}">
+                        <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
+                           href="{{ url_for('admin.painel_ver_moderadores', pagina=moderadores.next_num) if moderadores.has_next else '#' }}">
+                            <span class="fw-bold fs-6 text-black">Próximo</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-
-        <nav aria-label="page-navegation" class="d-flex justify-content-center mt-3 mb-5">
-            <ul class="pagination pagination-md d-flex gap-2">
-                <li class="page-item proximo-e-anterior hover-scale 
-            {% if not moderadores.has_prev %}disabled opacity-25 pe-none{% endif %}">
-                    <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
-                        href="{{ url_for('admin.painel_ver_moderadores', pagina=moderadores.prev_num) if moderadores.has_prev else '#' }}">
-                        <span class="fw-bold fs-6 text-black">Anterior</span>
-                    </a>
-                </li>
-
-
-
-                <li class="page-item proximo-e-anterior hover-scale 
-                    {% if not moderadores.has_next %}disabled opacity-25 pe-none{% endif %}">
-                    <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
-                        href="{{ url_for('admin.painel_ver_moderadores', pagina=moderadores.next_num) if moderadores.has_next else '#' }}">
-                        <span class="fw-bold fs-6 text-black">Próximo</span>
-                    </a>
-                </li>
-
-
-            </ul>
-        </nav>
-
-    </div>
-
-</body>
-
+    </body>
 </html>
+<script>
+   document.addEventListener("DOMContentLoaded", () => {
+   const formularios = document.querySelectorAll(".form-update");
+
+  formularios.forEach(form => {
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      const id = form.dataset.id;
+      const url = `/painel/admin/editar_moderador/${id}`;
+      const dados = new FormData(form);
+
+      try {
+        const resposta = await fetch(url, { method: "POST", body: dados });
+        const json = await resposta.json();
+
+        console.log("Resposta do servidor:", json);
+
+        // Fechar modal automaticamente
+        const modal = bootstrap.Modal.getInstance(form.closest(".modal"));
+        if (modal) modal.hide();
+
+        // Atualizar linha da tabela
+        const linha = form.closest("tr");
+        if (linha) {
+          linha.querySelector("td:nth-child(2)").textContent = json.nome;
+          linha.querySelector("td:nth-child(4)").textContent = json.admin ? "Administrador" : "Moderador";
+          const statusDiv = linha.querySelector("td:nth-child(5) div");
+          if (statusDiv) {
+            statusDiv.textContent = json.ativo ? "Ativo" : "Inativo";
+            statusDiv.className = json.ativo
+              ? "fw-bold status-tabela-ativo d-flex justify-content-center text-white"
+              : "fw-bold status-tabela-inativo d-flex justify-content-center text-white";
+          }
+        }
+
+      } catch (err) {
+        console.error("Erro na requisição:", err);
+      }
+    });
+  });
+});
+
+
+</script>

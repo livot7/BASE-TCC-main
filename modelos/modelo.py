@@ -20,6 +20,9 @@ class Modelo(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    def atualizar(self):
+        db.session.commit()
+
     # Transaforma em json para a API
 
     @property
