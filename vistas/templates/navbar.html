@@ -22,7 +22,7 @@
                     <span class="fs-4">Home</span>
                 </a>
                 <a class=" hover-scale d-flex align-items-center gap-2 nav-link text-white {{'active' if request.path =='/painel/historico' else ''}}"
-                   href="/painel/historico">
+                   href="{{ url_for('painel.painel_historico', pagina=1) }}">
                     <i class="material-symbols-outlined fs-1">history</i>
                     <span class="fs-4 ">Histórico</span>
                 </a>

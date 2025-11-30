@@ -46,7 +46,19 @@ def preguiça_2():
         )
 
         novo.salvar()
-        print("Contas criadas")
+        print("Cartões criadas")
+
+
+def preguiça_3():
+    for i in range(30):
+        novo = Acesso(
+            usuario_id=i+1,
+            cartao_id=i+1,
+            tipo_acesso="Ativo",
+            local="Garagem"
+        )
+        novo.salvar()
+        print("Acessos criados")
 
 
 if __name__ == "__main__":
