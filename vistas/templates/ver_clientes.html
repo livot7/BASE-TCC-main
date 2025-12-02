@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ver clientes</title>
+        {% include "head_base.html" %}
+    </head>
+    <body>
+        <div class="body-geral">
+            {% include "navbar.html" %}
+            <div class="container mt-5">
+                <div class="d-flex flex-column flex-md-row align-items-center bg-light p-3 rounded-3 shadow-sm">
+                    <form class="d-flex align-items-center flex-grow-1 w-100 mb-2 mb-md-0 me-md-3"
+                          role="search">
+                        <span class="material-symbols-outlined fs-1 me-2 text-muted">search</span>
+                        <input class="w-100 input-busca"
+                               type="search"
+                               placeholder="Buscar moderador..."
+                               aria-label="Buscar">
+                    </form>
+                    <div class="d-flex w-100 w-md-auto justify-content-between justify-content-md-end">
+                        <button class="btn btn-outline-secondary d-flex align-items-center me-2 py-2 w-50 w-md-auto hover-scale "
+                                type="button">
+                            <i class="bi bi-funnel me-1 fs-4"></i>
+                            Filtros
+                        </button>
+                        <button class="btn btn-primary d-flex botao hover-scale align-items-center py-2 fs-4 rounded-3 justify-content-center w-50 w-md-auto"
+                                type="button">
+                            <i class="bi bi-download me-3 text-center"></i>
+                            Exportar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-1 row-cols-md-3 g-4 mt-4 p-0">
+                    <div class="col">
+                        <div class="card h-100 d-flex rounded-3">
+                            <div class="d-flex flex-column flex-md-row align-items-center p-3">
+                                <div class="flex-shrink-0 mb-2 mb-md-0 me-md-3">
+                                    <img src="https://cataas.com/cat?timestamp=1"
+                                         width="100px"
+                                         height="100px"
+                                         class="rounded-circle"
+                                         alt="...">
+                                </div>
+                                <div class="flex-grow-1 text-center text-md-start fw-bold fs-4 min-w-0">
+                                    <span class="text-wrap text-break">Paulo Rodrigues silva</span>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0 pt-md-3">
+                                <i class="bi bi-envelope card-title text-center fs-5 align-items-center d-flex gap-2"> leetobr@gmail.com</i>
+                                <p class="card-text">
+                                    This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-body-secondary">Last updated 3 mins ago</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-body-secondary">Last updated 3 mins ago</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

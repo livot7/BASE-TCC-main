@@ -54,8 +54,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('data_criacao', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email'),
-    sa.UniqueConstraint('senha_hash')
+    sa.UniqueConstraint('email')
     )
     # ### end Alembic commands ###
 

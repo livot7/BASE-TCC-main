@@ -30,7 +30,6 @@ def logout():
     session.clear()
     return redirect("/")
 
-
 @painel_blueprint.route("/painel/historico/<int:pagina>", methods=["GET", "POST"])
 def painel_historico(pagina):
     if request.method == "GET":
@@ -41,10 +40,14 @@ def painel_historico(pagina):
             per_page=10, page=pagina, error_out=False)
         return render_template("historico.html", acessos=acessos, page=pagina)
 
-
 @painel_blueprint.route("/painel/cartoes/<int:pagina>", methods=["GET", "POST"])
 def painel_cartao(pagina):
     if request.method == "GET":
         cartoes = Cartao.query.paginate(
             per_page=10, page=pagina, error_out=False)
         return render_template("cartoes.html", cartoes=cartoes, page=pagina)
+
+@painel_blueprint.route("/painel/clientes", methods = ["GET","POST"])
+def painel_clientes():
+    if request.method == "GET":
+        return render_template("ver_clientes.html")
