@@ -72,3 +72,15 @@ def painel_criar_moderador():
     moderador.salvar()
     flash(f"Moderador {nome} criado com sucesso", "success")
     return redirect("/painel/admin")
+
+
+@admin_blueprint.route("/painel/admin/buscar_moderadores")
+def buscar_moderadores():
+    termo = request.args.get("nome", "").strip()
+    if not termo:
+        return jsonify([])
+
+    moderadores = Moderador.query.filter(
+        Moderador.nome.ilike(f"%{termo}%")).all()
+    resultado = [m.json for m in moderadores]  # usa a propriedade json
+    return jsonify(resultado)

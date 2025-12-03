@@ -13,9 +13,10 @@
                           role="search">
                         <span class="material-symbols-outlined fs-1 me-2 text-muted">search</span>
                         <input class="w-100 input-busca"
-                               type="search"
+                               type="text"
                                placeholder="Buscar moderador..."
-                               aria-label="Buscar">
+                               aria-label="Buscar"
+                               id="busca-moderador">
                     </form>
                     <div class="d-flex w-100 w-md-auto justify-content-between justify-content-md-end">
                         <button class="btn btn-outline-secondary d-flex align-items-center me-2 py-2 w-50 w-md-auto hover-scale "
@@ -46,7 +47,7 @@
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tabela-busca">
                                 {% for moderador in moderadores.items %}
                                     <tr>
                                         <th scope="row">{{ moderador.id }}</th>
@@ -66,7 +67,27 @@
                                                 <div class="fw-bold status-tabela-inativo d-flex justify-content-center text-white">Inativo</div>
                                             {% endif %}
                                         </td>
-                                        <td>{% include "editar_moderador_modal.html" %}</td>
+                                        <td>
+                                            <div class="modal fade" id="modalEditar" tabindex="-1">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <form id="formEditarModerador">
+                                                            <input type="hidden" id="modalId">
+                                                            <input type="text" id="modalNome" class="form-control mb-2">
+                                                            <label>
+                                                                <input type="checkbox" id="modalAdmin">
+                                                                Admin
+                                                            </label>
+                                                            <label>
+                                                                <input type="checkbox" id="modalAtivo">
+                                                                Ativo
+                                                            </label>
+                                                            <button type="submit" class="btn btn-primary mt-2">Salvar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="fw-bold alterar-senha-tabela d-flex justify-content-center text-white hover-scale">
                                                 <i class="bi bi-lock"> Alterar senha</i>
@@ -100,47 +121,131 @@
     </body>
 </html>
 <script>
-   document.addEventListener("DOMContentLoaded", () => {
-   const formularios = document.querySelectorAll(".form-update");
+document.addEventListener("DOMContentLoaded", () => {
+  // Pega todos os formulários de edição
+  document.querySelectorAll(".form-update").forEach(form => {
+    form.addEventListener("submit", async e => {
+      e.preventDefault(); // impede a página de recarregar
 
-  formularios.forEach(form => {
-    form.addEventListener("submit", async event => {
-      event.preventDefault();
+      // Envia os dados do formulário para o servidor
+      const resposta = await fetch(`/painel/admin/editar_moderador/${form.dataset.id}`, {
+        method: "POST",
+        body: new FormData(form)
+      });
 
-      const id = form.dataset.id;
-      const url = `/painel/admin/editar_moderador/${id}`;
-      const dados = new FormData(form);
+      const resultado = await resposta.json();
+      console.log("Resposta do servidor:", resultado);
 
-      try {
-        const resposta = await fetch(url, { method: "POST", body: dados });
-        const json = await resposta.json();
+      // Fecha o modal
+      bootstrap.Modal.getInstance(form.closest(".modal"))?.hide();
 
-        console.log("Resposta do servidor:", json);
+      // Atualiza a linha da tabela
+      const linha = form.closest("tr");
+      if (!linha) return;
 
-        // Fechar modal automaticamente
-        const modal = bootstrap.Modal.getInstance(form.closest(".modal"));
-        if (modal) modal.hide();
+      linha.children[1].textContent = resultado.nome; // coluna Nome
+      linha.children[3].textContent = resultado.admin ? "Administrador" : "Moderador"; // coluna Permissão
 
-        // Atualizar linha da tabela
-        const linha = form.closest("tr");
-        if (linha) {
-          linha.querySelector("td:nth-child(2)").textContent = json.nome;
-          linha.querySelector("td:nth-child(4)").textContent = json.admin ? "Administrador" : "Moderador";
-          const statusDiv = linha.querySelector("td:nth-child(5) div");
-          if (statusDiv) {
-            statusDiv.textContent = json.ativo ? "Ativo" : "Inativo";
-            statusDiv.className = json.ativo
-              ? "fw-bold status-tabela-ativo d-flex justify-content-center text-white"
-              : "fw-bold status-tabela-inativo d-flex justify-content-center text-white";
-          }
-        }
-
-      } catch (err) {
-        console.error("Erro na requisição:", err);
+      const status = linha.children[4].querySelector("div");
+      if (status) {
+        status.textContent = resultado.ativo ? "Ativo" : "Inativo";
+        status.className = `fw-bold ${resultado.ativo ? "status-tabela-ativo" : "status-tabela-inativo"} d-flex justify-content-center text-white`;
       }
     });
   });
 });
 
 
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("busca-moderador");
+  const tbody = document.getElementById("tabela-busca");
+  const modal = new bootstrap.Modal(document.getElementById("modalEditar"));
+  const formModal = document.getElementById("formEditarModerador");
+
+  let timeout;
+
+  // Função para preencher modal com dados da linha
+  function preencherModal(tr) {
+    document.getElementById("modalId").value = tr.dataset.id;
+    document.getElementById("modalNome").value = tr.children[1].textContent;
+    document.getElementById("modalAdmin").checked = tr.children[3].textContent === "Administrador";
+    document.getElementById("modalAtivo").checked = tr.children[4].textContent === "Ativo";
+  }
+
+  // Clique no botão "Editar" dentro da tabela
+  tbody.addEventListener("click", e => {
+    const btn = e.target.closest(".botao-modal");
+    if (!btn) return;
+    const tr = btn.closest("tr");
+    preencherModal(tr);
+  });
+
+  // Envio do formulário do modal
+  formModal.addEventListener("submit", async e => {
+    e.preventDefault();
+    const formData = new FormData(formModal);
+    const id = formModal.modalId.value;
+
+    try {
+      const res = await fetch(`/painel/admin/editar_moderador/${id}`, {
+        method: "POST",
+        body: formData
+      });
+      const r = await res.json();
+
+      // Atualiza a linha correspondente na tabela
+      const tr = tbody.querySelector(`tr[data-id="${r.id}"]`);
+      if (tr) {
+        tr.children[1].textContent = r.nome;
+        tr.children[3].textContent = r.admin ? "Administrador" : "Moderador";
+        tr.children[4].textContent = r.ativo ? "Ativo" : "Inativo";
+        tr.children[4].className = `fw-bold ${r.ativo ? 'status-tabela-ativo' : 'status-tabela-inativo'} d-flex justify-content-center text-white`;
+      }
+
+      modal.hide();
+    } catch (err) {
+      console.error("Erro ao atualizar moderador:", err);
+    }
+  });
+
+  // Busca com debounce
+  input.addEventListener("input", () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(async () => {
+      const termo = input.value.trim();
+      if (!termo) {
+        tbody.innerHTML = "";
+        return;
+      }
+
+      try {
+        const lista = await (await fetch(`/painel/admin/buscar_moderadores?nome=${encodeURIComponent(termo)}`)).json();
+        
+        tbody.innerHTML = lista.map(m => `
+          <tr data-id="${m.id}">
+            <th>${m.id}</th>
+            <td>${m.nome}</td>
+            <td>${m.email}</td>
+            <td>${m.admin ? "Administrador" : "Moderador"}</td>
+            <td class="${m.ativo ? 'status-tabela-ativo' : 'status-tabela-inativo'} d-flex justify-content-center fw-bold text-white">
+              ${m.ativo ? "Ativo" : "Inativo"}
+            </td>
+            <td>
+              <button type="button" class="botao-modal btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditar">
+                Editar
+              </button>
+            </td>
+          </tr>
+        `).join("");
+
+      } catch (err) {
+        console.error("Erro na busca:", err);
+      }
+    }, 500);
+  });
+});
 </script>
