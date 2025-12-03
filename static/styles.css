@@ -402,6 +402,13 @@ footer {
     border-radius: 10px;
 }
 
+.editar-cliente {
+    width: 300px;
+    height: 40px;
+    background-color: #3B82F6;
+    border-radius: 10px;
+}
+
 .alterar-senha-tabela {
     width: 120px;
     height: 25px;
@@ -417,4 +424,10 @@ footer {
 .checkbox-grande {
     transform: scale(1.5);
     cursor: pointer;
+}
+
+.navbar {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
