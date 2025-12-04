@@ -61,5 +61,19 @@ def preguiça_3():
         print("Acessos criados")
 
 
+def preguiça_4():
+    for i in range(30):
+        novo = Cliente(
+            nome="rafa",
+            documento=i+1,
+            tem_acesso=1,
+            tipo="Aluno",
+            email=f"paulo{i+1}@gmail.com"
+        )
+        novo.salvar()
+        print("Clientes criados com sucesso criados")
+
+
 if __name__ == "__main__":
+
     app.run(debug=True)

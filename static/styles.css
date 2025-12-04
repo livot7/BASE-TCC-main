@@ -393,7 +393,7 @@ footer {
 .status-tabela-inativo {
     width: 60px;
     height: 25px;
-    background-color: #ff0000;
+    background-color: rgb(97, 97, 97);
     border-radius: 10px;
     justify-self: center;
 

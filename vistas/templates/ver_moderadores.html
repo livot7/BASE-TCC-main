@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     {% include "head_base.html" %}
-    <title>Histórico</title>
+    <title>Ver moderadores</title>
   </head>
   <body>
     <div class="body-geral">
@@ -16,7 +16,7 @@
                    type="text"
                    placeholder="Buscar moderador..."
                    hx-get="/htmx/buscar_moderadores"
-                   hx-trigger="input changed delay:500ms, keyup[key=='Enter']"
+                   hx-trigger="input changed delay:250ms, keyup[key=='Enter']"
                    hx-target="#moderadores-body"
                    hx-indicator=".htmx-indicator"
                    hx-swap="outerHTML"
