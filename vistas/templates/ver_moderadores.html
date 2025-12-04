@@ -9,15 +9,19 @@
       {% include "navbar.html" %}
       <div class="container mt-5">
         <div class="d-flex flex-column flex-md-row align-items-center bg-light p-3 rounded-3 shadow-sm">
-          <form class="d-flex align-items-center flex-grow-1 w-100 mb-2 mb-md-0 me-md-3"
-                role="search">
+          <div class="d-flex align-items-center flex-grow-1 w-100 mb-2 mb-md-0 me-md-3"
+               role="search">
             <span class="material-symbols-outlined fs-1 me-2 text-muted">search</span>
             <input class="w-100 input-busca"
                    type="text"
                    placeholder="Buscar moderador..."
-                   aria-label="Buscar"
-                   id="busca-moderador">
-          </form>
+                   hx-get="/htmx/buscar_moderadores"
+                   hx-trigger="input changed delay:500ms, keyup[key=='Enter']"
+                   hx-target="#moderadores-body"
+                   hx-indicator=".htmx-indicator"
+                   hx-swap="outerHTML"
+                   name="nome">
+          </div>
           <div class="d-flex w-100 w-md-auto justify-content-between justify-content-md-end">
             <button class="btn btn-outline-secondary d-flex align-items-center me-2 py-2 w-50 w-md-auto hover-scale "
                     type="button">
@@ -48,11 +52,7 @@
                   <th></th>
                 </tr>
               </thead>
-              <tbody hx-target="closest tr" hx-swap="outerHTML">
-                {% for moderador in moderadores.items %}
-                  {% include "componentes/linha_moderador.html" %}
-                {% endfor %}
-              </tbody>
+              {% include "componentes/moderadores_body.html" %}
             </table>
           </div>
         </div>

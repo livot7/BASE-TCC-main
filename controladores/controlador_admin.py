@@ -68,15 +68,12 @@ def painel_criar_moderador():
     return redirect("/painel/admin")
 
 
-@admin_blueprint.route("/painel/admin/buscar_moderadores")
+@admin_blueprint.route("/htmx/buscar_moderadores")
 def buscar_moderadores():
-    termo = request.args.get("nome", "").strip()
-    if not termo:
-        return jsonify([])
+    pesquisa = request.args.get("nome", "").strip()
 
     moderadores_filtrados = Moderador.query.filter(
-        Moderador.nome.ilike(f"%{termo}%")
-    ).limit(10).all()
-    # usa a propriedade json
-    resultado = [m.json for m in moderadores_filtrados]
-    return jsonify(resultado)
+        Moderador.nome.ilike(f"%{pesquisa}%")
+    ).paginate(per_page=10)
+
+    return render_template("componentes/moderadores_body.html", moderadores=moderadores_filtrados)
