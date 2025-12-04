@@ -80,7 +80,9 @@ def buscar_moderadores():
     if not termo:
         return jsonify([])
 
-    moderadores = Moderador.query.filter(
-        Moderador.nome.ilike(f"%{termo}%")).all()
-    resultado = [m.json for m in moderadores]  # usa a propriedade json
+    moderadores_filtrados = Moderador.query.filter(
+        Moderador.nome.ilike(f"%{termo}%")
+    ).limit(10).all()
+    # usa a propriedade json
+    resultado = [m.json for m in moderadores_filtrados]
     return jsonify(resultado)

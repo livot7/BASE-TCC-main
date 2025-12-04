@@ -386,13 +386,17 @@ footer {
     height: 25px;
     background-color: #097E3E;
     border-radius: 10px;
+    justify-self: center;
 }
+
 
 .status-tabela-inativo {
     width: 60px;
     height: 25px;
     background-color: #ff0000;
     border-radius: 10px;
+    justify-self: center;
+
 }
 
 .editar-tabela {
@@ -400,6 +404,7 @@ footer {
     height: 25px;
     background-color: #3B82F6;
     border-radius: 10px;
+
 }
 
 .editar-cliente {
@@ -414,6 +419,8 @@ footer {
     height: 25px;
     background-color: #7C3AED;
     border-radius: 10px;
+    justify-self: center;
+
 }
 
 .botao-modal {
