@@ -31,23 +31,17 @@ def painel_ver_moderadores(pagina):
         return render_template("ver_moderadores.html", moderadores=moderadores, page=pagina)
 
 
-@admin_blueprint.route("/painel/admin/editar_moderador/<int:id>", methods=["POST"])
+@admin_blueprint.put("/htmx/editar_moderador/<int:id>")
 def editar_moderador(id):
     moderador = Moderador.query.get_or_404(id)
 
-    # Lendo os dados enviados via FormData
     moderador.nome = request.form.get("nome")
     moderador.admin = request.form.get("admin") == "1"
     moderador.ativo = request.form.get("ativo") == "1"
 
     moderador.salvar()
 
-    return jsonify({
-        "id": moderador.id,
-        "nome": moderador.nome,
-        "admin": moderador.admin,
-        "ativo": moderador.ativo
-    })
+    return render_template("componentes/linha_moderador.html", moderador=moderador)
 
 
 @admin_blueprint.route("/painel/admin/criar_moderador", methods=["GET", "POST"])
