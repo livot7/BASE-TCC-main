@@ -1,5 +1,5 @@
 {% for cliente in clientes.items %}
-    <div class="col">
+    <div class="col" id="card-cliente-{{ cliente.id }}">
         <div class="card h-100 d-flex rounded-3 sombra">
             <div class="d-flex flex-column flex-md-row align-items-center p-3 gap-3">
                 <div class="flex-shrink-0 mb-2 mb-md-0 me-md-3">
@@ -13,7 +13,13 @@
                     <span class="text-wrap text-break">{{ cliente.nome }}</span>
                 </div>
                 <div class="status-tabela-ativo text-white fw-bold text-center flex-shrink-0">
-                    <span>Ativo</span>
+                    <span>
+                        {% if cliente.tem_acesso %}
+                            Ativo
+                        {% else %}
+                            Inativo
+                        {% endif %}
+                    </span>
                 </div>
             </div>
             <div class="card-body pt-0 pt-md-3">
@@ -22,13 +28,14 @@
                     <i class="bi bi-card-text card-title text-center fs-5 align-items-center d-flex gap-2">Documento: {{ cliente.documento }}</i>
                 </p>
             </div>
-            <div class="card-footer d-flex justify-content-center shadow-sm"
-                 data-bs-toggle="modal"
-                 data-bs-target="#modalEditar{{ cliente.id }}">
-                <span class="fw-bold editar-cliente d-flex justify-content-center text-white hover-scale fs-4 ">
+            <button type="button"
+                    class="card-footer d-flex justify-content-center shadow-sm border-0 bg-transparent w-100"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalcliente{{ cliente.id }}">
+                <span class="fw-bold editar-cliente d-flex justify-content-center text-white hover-scale fs-4">
                     <i class="bi bi-pencil me-1"></i> Editar
                 </span>
-            </div>
+            </button>
         </div>
     </div>
 {% endfor %}

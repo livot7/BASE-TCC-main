@@ -17,7 +17,13 @@
                         <input class="w-100 input-busca"
                                type="search"
                                placeholder="Buscar Cliente..."
-                               aria-label="Buscar">
+                               aria-label="Buscar"
+                               hx-get="/htmx/buscar_clientes"
+                               hx-trigger="input delay:250ms"
+                               hx-target="#clientes"
+                               hx-indicator=".htmx-indicator"
+                               hx-swap="innerHTML"
+                               name="nome">
                     </form>
                     <div class="d-flex w-100 w-md-auto justify-content-between justify-content-md-end">
                         <button class="btn btn-outline-secondary d-flex align-items-center me-2 py-2 w-50 w-md-auto hover-scale "
@@ -34,7 +40,9 @@
                 </div>
             </div>
             <div class="container">
-                <div class="row row-cols-1 row-cols-xxl-3  g-4 mt-4 p-0">{% include "componentes/card_cliente.html" %}</div>
+                <div class="row row-cols-1 row-cols-xxl-3  g-4 mt-4 p-0" id="clientes">
+                    {% include "componentes/card_cliente.html" %}
+                </div>
             </div>
             <nav aria-label="page-navegation"
                  class="d-flex justify-content-center mt-3 ">
@@ -54,5 +62,8 @@
                 </ul>
             </nav>
         </div>
+        {% for cliente in clientes.items %}
+            {% include "componentes/editar_cliente_modal.html" %}
+        {% endfor %}
     </body>
 </html>

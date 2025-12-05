@@ -55,3 +55,28 @@ def painel_clientes(pagina):
     clientes = Cliente.query.order_by(Cliente.id).paginate(
         page=pagina, per_page=6, error_out=False)
     return render_template("ver_clientes.html", clientes=clientes, page=pagina)
+
+
+@painel_blueprint.put("/htmx/editar_cliente/<int:id>")
+def editar_cliente(id):
+    cliente = Cliente.query.get_or_404(id)
+
+    cliente.nome = request.form.get("nome")
+    cliente.documento = request.form.get("documento")
+    cliente.tipo = request.form.get("tipo")
+    cliente.tem_acesso = "tem_acesso" in request.form
+    cliente.documento_valido = "documento_valido" in request.form
+
+    cliente.salvar()
+
+    return render_template("componentes/card_cliente_unico.html", cliente=cliente)
+
+
+@painel_blueprint.route("/htmx/buscar_clientes")
+def buscar_clientes():
+    pesquisa = request.args.get("nome", "").strip()
+    clientes_filtrados = Cliente.query.filter(
+        Cliente.nome.ilike(f"%{pesquisa}%")
+    ).paginate(per_page=6)
+
+    return render_template("componentes/card_cliente.html", clientes=clientes_filtrados)
