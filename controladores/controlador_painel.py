@@ -94,3 +94,23 @@ def buscar_acesso():
     ).paginate(per_page=10)
     return render_template("componentes/historico_acesso.html",
                            acessos=acessos_filtrados)
+
+@painel_blueprint.post("/htmx/adicionar_cliente")
+def adicionar_cliente():
+    nome = request.form["nome"]
+    email = request.form["email"]
+    documento = request.form["documento"]
+    tipo = request.form["tipo"]
+
+    if Cliente.query.filter_by(email=email).first():
+        flash("Esse cliente já existe", "warning")
+        return redirect("/painel/clientes/<int:1>")
+    cliente = Cliente(
+        nome=nome,
+        email=email,
+        tem_acesso = True,
+        tipo = tipo
+    )
+    cliente.salvar()
+    flash(f"Cliente {nome} criado com sucesso", "success")
+    return redirect("/painel/clientes/<int:1>")  
