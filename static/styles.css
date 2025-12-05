@@ -438,3 +438,14 @@ footer {
     max-width: 100%;
     box-sizing: border-box;
 }
+
+.botao-adicionar {
+    min-width: 250px;
+    min-height: 50px;
+    background: linear-gradient(#1d7edd, #104477);
+    font-size: 36px;
+    color: #fff;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+}
