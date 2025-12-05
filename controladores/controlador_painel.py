@@ -80,8 +80,17 @@ def buscar_clientes():
                                                   Cliente.email.ilike(busca),
                                                   Cliente.documento.ilike(
                                                       busca),
-                                                  Cliente.tipo.ilike(busca))
-
-                                              ).paginate(per_page=6)
+                                                  Cliente.tipo.ilike(busca))).paginate(per_page=6)
 
     return render_template("componentes/card_cliente.html", clientes=clientes_filtrados)
+
+
+@painel_blueprint.get("/htmx/busca_acesso")
+def buscar_acesso():
+    pesquisa = request.args.get("pesquisa", "").strip()
+    busca = f"%{pesquisa}%"
+    acessos_filtrados = Acesso.query.filter(
+        Acesso.local.ilike(busca)
+    ).paginate(per_page=10)
+    return render_template("componentes/historico_acesso.html",
+                           acessos=acessos_filtrados)
