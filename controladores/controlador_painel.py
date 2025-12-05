@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, session
 from modelos import Moderador, Cliente, Cartao, Acesso
 from datetime import date
-from sqlalchemy import func
+from sqlalchemy import func, or_
 
 painel_blueprint = Blueprint(
     "painel", __name__, template_folder="../vistas/templates")
@@ -75,8 +75,13 @@ def editar_cliente(id):
 @painel_blueprint.route("/htmx/buscar_clientes")
 def buscar_clientes():
     pesquisa = request.args.get("nome", "").strip()
-    clientes_filtrados = Cliente.query.filter(
-        Cliente.nome.ilike(f"%{pesquisa}%")
-    ).paginate(per_page=6)
+    busca = f"%{pesquisa}%"
+    clientes_filtrados = Cliente.query.filter(or_(Cliente.nome.ilike(busca),
+                                                  Cliente.email.ilike(busca),
+                                                  Cliente.documento.ilike(
+                                                      busca),
+                                                  Cliente.tipo.ilike(busca))
+
+                                              ).paginate(per_page=6)
 
     return render_template("componentes/card_cliente.html", clientes=clientes_filtrados)

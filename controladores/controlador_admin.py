@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, session, flash, jsonify, url_for
 from modelos import Moderador
+from sqlalchemy import or_
 
 admin_blueprint = Blueprint(
     "admin", __name__, template_folder="../vistas/templates")
@@ -71,9 +72,10 @@ def painel_criar_moderador():
 @admin_blueprint.route("/htmx/buscar_moderadores")
 def buscar_moderadores():
     pesquisa = request.args.get("nome", "").strip()
+    busca = f"%{pesquisa}%"
 
-    moderadores_filtrados = Moderador.query.filter(
-        Moderador.nome.ilike(f"%{pesquisa}%")
-    ).paginate(per_page=10)
+    moderadores_filtrados = Moderador.query.filter(or_(Moderador.nome.ilike(busca),
+                                                       Moderador.email.ilike(
+                                                           busca))).paginate(per_page=10)
 
     return render_template("componentes/moderadores_body.html", moderadores=moderadores_filtrados)
