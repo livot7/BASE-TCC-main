@@ -31,7 +31,7 @@ def painel_ver_moderadores(pagina):
         return render_template("ver_moderadores.html", moderadores=moderadores, page=pagina)
 
 
-@admin_blueprint.put("/htmx/editar_cliente/<int:id>")
+@admin_blueprint.put("/htmx/editar_moderador/<int:id>")
 def editar_moderador(id):
     moderador = Moderador.query.get_or_404(id)
 

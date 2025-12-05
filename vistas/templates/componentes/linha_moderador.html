@@ -1,4 +1,4 @@
-<tr class="align-middle">
+<tr class="align-middle" id="linha-moderador-{{ moderador.id }}">
     <th scope="row" class="text-end">{{ moderador.id }}</th>
     <td class="moderador-nome">{{ moderador.nome }}</td>
     <td>{{ moderador.email }}</td>
@@ -31,5 +31,6 @@
             <i class="bi bi-lock me-1"></i> Alterar senha
         </div>
     </td>
+    <!-- Modal dentro da linha -->
     <td>{% include "componentes/editar_moderador_modal.html" %}</td>
 </tr>
