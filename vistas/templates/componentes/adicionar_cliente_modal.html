@@ -4,66 +4,106 @@
      aria-labelledby="modalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow-lg border-0 rounded-4">
-            <div class="modal-header border-0 pb-0">
-                <h1 class="modal-title fs-4 fw-semibold">Alterar informações</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-content shadow-lg border-0 rounded-4 bg-white site-modal">
+            <div class="modal-header border-0 rounded-top-4 modal-gradiente-vermelho  text-white">
+                <h1 class="modal-title fs-4 fw-bold d-flex align-items-center gap-3"
+                    id="modalLabel">
+                    <i class="bi bi-person-plus text-white fs-3"></i>
+                    Adicionar Cliente
+                </h1>
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Fechar"></button>
             </div>
-            <div class="modal-body px-4">
+            <div class="modal-body p-4">
                 <form hx-post="/htmx/adicionar_cliente"
-                      hx-target="#card-cliente"
-                      hx-swap="outerHTML">
-                    <!-- Nome -->
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Nome</label>
+                      hx-target="#clientes"
+                      hx-swap="innerHTML"
+                      hx-on:
+                      "
+                      htmx:afterRequest:
+                      bootstrap.Modal.getInstance
+                      document.getElementById
+                      '
+                      adicionar_cliente_modal
+                      '
+                      .hide
+                      ">
+                    <input type="hidden" name="id_cliente" value="INJETE_O_ID_AQUI">
+                    <div class="mb-3">
+                        <label for="inputNome" class="form-label fw-semibold text-secondary">
+                            <i class="bi bi-person-fill"></i> Nome
+                        </label>
                         <input type="text"
-                               class="form-control form-control-lg rounded-3"
+                               class="form-control form-control-lg border-primary rounded-3"
                                name="nome"
-                               required>
+                               id="inputNome"
+                               placeholder="Digite o nome completo"
+                               required
+                               autofocus>
                     </div>
-                    <!-- Documento -->
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Documento</label>
+                    <div class="mb-3">
+                        <label for="inputDocumento" class="form-label fw-semibold ">
+                            <i class="bi bi-credit-card-2-back-fill opacity-50"></i> Documento
+                        </label>
                         <input type="text"
-                               class="form-control form-control-lg rounded-3"
+                               class="form-control form-control-lg border-primary rounded-3"
                                name="documento"
+                               id="inputDocumento"
+                               placeholder="CPF ou outro documento"
                                required>
                     </div>
-                    <!-- Documento válido -->
-                     <div class="mb-4">
-                        <label class="form-label fw-semibold">E-mail</label>
-                        <input type="text"
-                               class="form-control form-control-lg rounded-3"
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label fw-semibold text-secondary">
+                            <i class="bi bi-envelope-fill"></i> E-mail
+                        </label>
+                        <input type="email"
+                               class="form-control form-control-lg border-primary rounded-3"
                                name="email"
+                               id="inputEmail"
+                               placeholder="exemplo@dominio.com"
                                required>
                     </div>
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">Tipo</label>
-                        <select class="form-select form-select-lg rounded-3" name="tipo" required>
+                        <label for="selectTipo" class="form-label fw-semibold text-secondary">
+                            <i class="bi bi-tag-fill"></i> Tipo
+                        </label>
+                        <select class="form-select form-select-lg border-primary rounded-3"
+                                name="tipo"
+                                id="selectTipo"
+                                required>
+                            <option selected disabled value="">Selecione o tipo...</option>
                             <option value="aluno">Aluno</option>
-                            <option value="professor"
-                                    >Professor</option>
-                            <option value="visitante"
-                                    >Visitante</option>
+                            <option value="professor">Professor</option>
+                            <option value="visitante">Visitante</option>
                         </select>
                     </div>
-                    <!-- Status da conta -->
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Status da conta</label>
-                        <div class="form-check form-switch fs-5">
-                            <input class="form-check-input"
+                    <div class="mb-4 p-3 border border-primary rounded-3 bg-primary-subtle">
+                        <div class="form-check form-switch fs-4 d-flex align-items-center">
+                            <input class="form-check-input me-3"
                                    type="checkbox"
+                                   role="switch"
+                                   id="acessoSwitch"
                                    name="tem_acesso"
                                    value="1"
-                                   >
+                                   checked>
+                            <label class="form-check-label fw-bold text-primary mb-0" for="acessoSwitch">
+                                <i class="bi bi-unlock-fill me-1"></i> Acesso Liberado
+                            </label>
                         </div>
                     </div>
-                    <!-- Botões -->
-                    <div class="modal-footer border-0 mt-4">
+                    <div class="modal-footer border-0 pt-3 px-0">
                         <button type="button"
-                                class="btn btn-outline-danger px-4"
-                                data-bs-dismiss="modal">Sair</button>
-                        <button type="submit" class="btn btn-primary px-4" data-bs-dismiss="modal">Confirmar alterações</button>
+                                class="btn btn-outline-secondary px-4 fw-semibold"
+                                data-bs-dismiss="modal">
+                            <i class="bi bi-x-lg me-1"></i> Cancelar
+                        </button>
+                        <button type="submit"
+                                class="btn btn-primary px-4 fw-semibold"
+                                data-bs-dismiss="modal">
+                            <i class="bi bi-check-lg me-1"></i> Criar Cliente
+                        </button>
                     </div>
                 </form>
             </div>

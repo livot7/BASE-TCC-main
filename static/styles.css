@@ -67,8 +67,22 @@ a {
 }
 
 input.form-control {
-    border: 1px solid #6b0d0f;
-    border-radius: 10px;
+    border: 2px solid #6b0d0f;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: all .25s ease;
+}
+
+
+input.form-control:hover {
+    border-color: #8f1012;
+}
+
+input.form-control::placeholder {
+    color: #b5b5b5;
+    opacity: 1;
 }
 
 .hover-scale {
@@ -88,11 +102,7 @@ input.form-control {
     color: blue;
 }
 
-input.form-control:focus {
-    box-shadow: 0 0 0 0.25rem rgba(152, 1, 4, 0.25);
-    border-color: #980104;
-    outline: 0;
-}
+
 
 .hover-scale:active {
     transform: translateY(5px) scale(1.1);
@@ -384,7 +394,7 @@ footer {
 .status-tabela-ativo {
     width: 60px;
     height: 25px;
-    background-color: #097E3E;
+    background: linear-gradient(to right, #107922, #194906);
     border-radius: 10px;
     justify-self: center;
 }
@@ -408,9 +418,9 @@ footer {
 }
 
 .editar-cliente {
-    width: 300px;
+    width: 150px;
     height: 40px;
-    background-color: #3B82F6;
+    background: linear-gradient(to right, #0b467e, #008cff);
     border-radius: 10px;
 }
 
@@ -442,10 +452,236 @@ footer {
 .botao-adicionar {
     min-width: 250px;
     min-height: 50px;
-    background: linear-gradient(#1d7edd, #104477);
+    background: linear-gradient(to right, #240101, #8A0303);
     font-size: 36px;
     color: #fff;
     border-radius: 15px;
     border: none;
     cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+
+.modal-gradiente-vermelho {
+    background: linear-gradient(to right, #240101, #8A0303);
+}
+
+
+
+
+/* ===============================
+   CARD CLIENTE – BASE
+================================ */
+.card-cliente {
+    background: #ffffff;
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, .10);
+    transition: all .35s ease;
+    overflow: hidden;
+}
+
+/* Hover com movimento premium */
+.card-cliente:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow:
+        0 26px 48px rgba(0, 0, 0, .22),
+        0 0 0 1px rgba(138, 3, 3, .15);
+}
+
+/* ===============================
+   HEADER DO CARD
+================================ */
+.card-header-cliente {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #899dd1;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Avatar */
+.avatar-cliente {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+}
+
+/* Nome */
+.nome-cliente {
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* ===============================
+   BADGE DE STATUS
+================================ */
+.badge-status {
+    margin-left: auto;
+    font-size: .75rem;
+    padding: .45em .85em;
+    border-radius: 999px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.badge-status.ativo {
+    background: linear-gradient(135deg, #0E5E2A, #1DB954);
+    box-shadow: 0 4px 14px rgba(29, 185, 84, .45);
+}
+
+.badge-status.inativo {
+    background: linear-gradient(135deg, #5A0B0B, #9D1C1C);
+    box-shadow: 0 4px 14px rgba(157, 28, 28, .45);
+}
+
+/* ===============================
+   BODY – INFORMAÇÕES
+================================ */
+.card-body {
+    padding: 16px;
+}
+
+/* Campos de info (email/documento) */
+.campo-info {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    padding: .55rem .75rem;
+    margin-bottom: .5rem;
+    border-radius: 10px;
+
+    background: #f1f5f9;
+    font-size: .92rem;
+    color: #374151;
+}
+
+.campo-info i {
+    color: #8A0303;
+    font-size: 1.05rem;
+}
+
+.texto-info {
+    word-break: break-all;
+}
+
+/* ===============================
+   BOTÃO EDITAR
+================================ */
+.btn-editar-cliente {
+    width: 100%;
+    background: linear-gradient(to right, #005effcc, #00308a);
+
+    color: #fff;
+    border: none;
+    border-radius: 0 0 16px 16px;
+    padding: .85rem;
+
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: .4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+
+    transition: all .3s ease;
+}
+
+.btn-editar-cliente:hover {
+    filter: brightness(1.08);
+    transform: scale(1.03);
+    box-shadow: 0 -6px 22px rgba(3, 5, 138, 0.55);
+}
+
+.btn-editar-cliente:active {
+    transform: scale(.96);
+}
+
+/* ===============================
+   RESPONSIVIDADE
+================================ */
+
+
+.card-header-cliente::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg,
+            rgba(255, 255, 255, .08),
+            rgba(255, 255, 255, 0));
+    pointer-events: none;
+}
+
+
+/* ===== WRAPPER DO FORM ===== */
+.form-busca-clientes {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 0.35rem 0.75rem;
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.08),
+        inset 0 0 0 1px rgba(23, 66, 146, 0.08);
+
+    transition: all .25s ease;
+}
+
+/* Hover leve */
+.form-busca-clientes:hover {
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1px rgba(23, 66, 146, 0.18);
+}
+
+/* ===== INPUT ===== */
+.input-busca {
+    border: none;
+    outline: none;
+    box-shadow: none !important;
+
+    font-size: 1rem;
+    padding: 0.65rem 0.5rem;
+    background: transparent;
+    color: #1f2937;
+
+    transition: all .2s ease;
+}
+
+/* Placeholder elegante */
+.input-busca::placeholder {
+    color: #9ca3af;
+    font-weight: 500;
+    letter-spacing: .2px;
+}
+
+/* Focus real */
+.form-busca-clientes:focus-within {
+    box-shadow:
+        0 12px 34px rgba(23, 66, 146, 0.28),
+        inset 0 0 0 2px rgba(23, 66, 146, 0.85);
+}
+
+/* ===== ÍCONE ===== */
+.form-busca-clientes .material-symbols-outlined {
+    color: #292828;
+    transition: all .25s ease;
+}
+
+.form-busca-clientes:focus-within .material-symbols-outlined {
+    color: #383737;
+    transform: scale(1.08);
+}
+
+.modal-gradiente-azul {
+    background: linear-gradient(to right, #031633, #0b3d66);
 }

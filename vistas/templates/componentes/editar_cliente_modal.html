@@ -4,37 +4,58 @@
      aria-labelledby="modalLabel{{ cliente.id }}"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow-lg border-0 rounded-4">
-            <div class="modal-header border-0 pb-0">
-                <h1 class="modal-title fs-4 fw-semibold">Alterar informações</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-content shadow-lg border-0 rounded-4 bg-white site-modal">
+            <div class="modal-header border-0 rounded-top-4 modal-gradiente-azul text-white">
+                <h1 class="modal-title fs-4 fw-bold d-flex align-items-center gap-3"
+                    id="modalLabel{{ cliente.id }}">
+                    <i class="bi bi-pencil-square text-white fs-3"></i>
+                    Alterar Informações do Cliente
+                </h1>
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Fechar"></button>
             </div>
-            <div class="modal-body px-4">
+            <div class="modal-body p-4">
                 <form hx-put="/htmx/editar_cliente/{{ cliente.id }}"
                       hx-target="#card-cliente-{{ cliente.id }}"
-                      hx-swap="outerHTML">
-                    <!-- Nome -->
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Nome</label>
+                      hx-swap="outerHTML"
+                      hx-on::after-request="new bootstrap.Modal(document.getElementById('modalcliente{{ cliente.id }}')).hide()">
+                    <div class="mb-3">
+                        <label for="inputNomeEdit-{{ cliente.id }}"
+                               class="form-label fw-semibold text-secondary">
+                            <i class="bi bi-person-fill"></i> Nome
+                        </label>
                         <input type="text"
-                               class="form-control form-control-lg rounded-3"
+                               class="form-control form-control-lg border-primary rounded-3"
                                name="nome"
+                               id="inputNomeEdit-{{ cliente.id }}"
                                value="{{ cliente.nome }}"
+                               placeholder="Digite o nome completo"
                                required>
                     </div>
-                    <!-- Documento -->
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Documento</label>
+                    <div class="mb-3">
+                        <label for="inputDocumentoEdit-{{ cliente.id }}"
+                               class="form-label fw-semibold text-secondary">
+                            <i class="bi bi-credit-card-2-back-fill"></i> Documento
+                        </label>
                         <input type="text"
-                               class="form-control form-control-lg rounded-3"
+                               class="form-control form-control-lg border-primary rounded-3"
                                name="documento"
+                               id="inputDocumentoEdit-{{ cliente.id }}"
                                value="{{ cliente.documento }}"
+                               placeholder="CPF ou outro documento"
                                required>
                     </div>
-                    <!-- Tipo -->
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Tipo</label>
-                        <select class="form-select form-select-lg rounded-3" name="tipo" required>
+                    <div class="mb-3">
+                        <label for="selectTipoEdit-{{ cliente.id }}"
+                               class="form-label fw-semibold text-secondary">
+                            <i class="bi bi-tag-fill"></i> Tipo
+                        </label>
+                        <select class="form-select form-select-lg border-primary rounded-3"
+                                name="tipo"
+                                id="selectTipoEdit-{{ cliente.id }}"
+                                required>
                             <option value="aluno" {% if cliente.tipo == "aluno" %}selected{% endif %}>Aluno</option>
                             <option value="professor"
                                     {% if cliente.tipo == "professor" %}selected{% endif %}>Professor</option>
@@ -42,34 +63,32 @@
                                     {% if cliente.tipo == "visitante" %}selected{% endif %}>Visitante</option>
                         </select>
                     </div>
-                    <!-- Documento válido -->
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Documento válido?</label>
-                        <div class="form-check form-switch fs-5">
-                            <input class="form-check-input"
+                    <div class="mb-4 p-3 border border-primary rounded-3 bg-primary-subtle">
+                        <div class="form-check form-switch fs-4 d-flex align-items-center">
+                            <input class="form-check-input me-3"
                                    type="checkbox"
-                                   name="documento_valido"
-                                   value="1"
-                                   {% if cliente.documento_valido %}checked{% endif %}>
-                        </div>
-                    </div>
-                    <!-- Status da conta -->
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">Status da conta</label>
-                        <div class="form-check form-switch fs-5">
-                            <input class="form-check-input"
-                                   type="checkbox"
+                                   role="switch"
+                                   id="acessoSwitchEdit-{{ cliente.id }}"
                                    name="tem_acesso"
                                    value="1"
                                    {% if cliente.tem_acesso %}checked{% endif %}>
+                            <label class="form-check-label fw-bold text-primary mb-0"
+                                   for="acessoSwitchEdit-{{ cliente.id }}">
+                                <i class="bi bi-unlock-fill me-1"></i> Acesso Liberado
+                            </label>
                         </div>
                     </div>
-                    <!-- Botões -->
-                    <div class="modal-footer border-0 mt-4">
+                    <div class="modal-footer border-0 pt-3 px-0">
                         <button type="button"
-                                class="btn btn-outline-danger px-4"
-                                data-bs-dismiss="modal">Sair</button>
-                        <button type="submit" class="btn btn-primary px-4" data-bs-dismiss="modal">Confirmar alterações</button>
+                                class="btn btn-outline-secondary px-4 fw-semibold"
+                                data-bs-dismiss="modal">
+                            <i class="bi bi-x-lg me-1"></i> Cancelar
+                        </button>
+                        <button type="submit"
+                                class="btn btn-primary px-4 fw-semibold"
+                                data-bs-dismiss="modal">
+                            <i class="bi bi-check-lg me-1"></i> Confirmar Alterações
+                        </button>
                     </div>
                 </form>
             </div>

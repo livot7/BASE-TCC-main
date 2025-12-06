@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, session
+from flask import Blueprint, request, render_template, redirect, session, flash
 from modelos import Moderador, Cliente, Cartao, Acesso
 from datetime import date
 from sqlalchemy import func, or_
@@ -52,7 +52,7 @@ def painel_cartao(pagina):
 
 @painel_blueprint.route("/painel/clientes/<int:pagina>")
 def painel_clientes(pagina):
-    clientes = Cliente.query.order_by(Cliente.id).paginate(
+    clientes = Cliente.query.order_by(Cliente.id.desc()).paginate(
         page=pagina, per_page=6, error_out=False)
     return render_template("ver_clientes.html", clientes=clientes, page=pagina)
 
@@ -76,11 +76,19 @@ def editar_cliente(id):
 def buscar_clientes():
     pesquisa = request.args.get("nome", "").strip()
     busca = f"%{pesquisa}%"
-    clientes_filtrados = Cliente.query.filter(or_(Cliente.nome.ilike(busca),
-                                                  Cliente.email.ilike(busca),
-                                                  Cliente.documento.ilike(
-                                                      busca),
-                                                  Cliente.tipo.ilike(busca))).paginate(per_page=6)
+    clientes_filtrados = (
+        Cliente.query
+        .filter(
+            or_(
+                Cliente.nome.ilike(busca),
+                Cliente.email.ilike(busca),
+                Cliente.documento.ilike(busca),
+                Cliente.tipo.ilike(busca),
+            )
+        )
+        .order_by(Cliente.id.desc())
+        .paginate(per_page=6)
+    )
 
     return render_template("componentes/card_cliente.html", clientes=clientes_filtrados)
 
@@ -95,6 +103,7 @@ def buscar_acesso():
     return render_template("componentes/historico_acesso.html",
                            acessos=acessos_filtrados)
 
+
 @painel_blueprint.post("/htmx/adicionar_cliente")
 def adicionar_cliente():
     nome = request.form["nome"]
@@ -103,14 +112,15 @@ def adicionar_cliente():
     tipo = request.form["tipo"]
 
     if Cliente.query.filter_by(email=email).first():
-        flash("Esse cliente já existe", "warning")
-        return redirect("/painel/clientes/<int:1>")
+        return "<div class='text-danger'>Esse cliente já existe.</div>"
     cliente = Cliente(
         nome=nome,
         email=email,
-        tem_acesso = True,
-        tipo = tipo
+        tem_acesso=True,
+        tipo=tipo,
+        documento=documento
     )
     cliente.salvar()
-    flash(f"Cliente {nome} criado com sucesso", "success")
-    return redirect("/painel/clientes/<int:1>")  
+    clientes_totais = Cliente.query.order_by(
+        Cliente.id.desc()).paginate(per_page=6, error_out=False)
+    return render_template("componentes/card_cliente.html", clientes=clientes_totais)

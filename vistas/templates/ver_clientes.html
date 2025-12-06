@@ -11,9 +11,9 @@
             {% include "navbar.html" %}
             <div class="container mt-3">
                 <div class="d-flex flex-column flex-md-row align-items-center bg-light p-3 rounded-3 shadow-sm">
-                    <form class="d-flex align-items-center flex-grow-1 w-100 mb-2 mb-md-0 me-md-3"
+                    <form class="form-busca-clientes d-flex align-items-center flex-grow-1 w-100 mb-2 mb-md-0 me-md-3"
                           role="search">
-                        <span class="material-symbols-outlined fs-1 me-2 text-muted">search</span>
+                        <span class="material-symbols-outlined fs-1 me-2">search</span>
                         <input class="w-100 input-busca"
                                type="search"
                                placeholder="Buscar Cliente..."
@@ -28,8 +28,8 @@
                     <div class="d-flex justify-content-between justify-content-md-end">
                         <button class="d-flex botao-adicionar hover-scale align-items-center py-2 fs-4 justify-content-center "
                                 type="button"
-                                data-bs-toggle = "modal"
-                                data-bs-target = "#adicionar_cliente_modal">
+                                data-bs-toggle="modal"
+                                data-bs-target="#adicionar_cliente_modal">
                             <i class="bi bi-person-plus-fill me-3 d-flex fs-4"></i>
                             <span class="text-white fs-5">Adicionar Cliente</span>
                         </button>
@@ -37,9 +37,8 @@
                 </div>
             </div>
             <div class="container">
-                <div class="row row-cols-1 row-cols-xxl-3  g-4 mt-4 p-0" id="clientes">
-                    {% include "componentes/card_cliente.html" %}
-                </div>
+                <div class="row row-cols-1 row-cols-xxl-3  g-4 mt-4 p-0 clientes"
+                     id="clientes">{% include "componentes/card_cliente.html" %}</div>
             </div>
             <nav aria-label="page-navegation"
                  class="d-flex justify-content-center mt-3 ">
@@ -62,6 +61,18 @@
         {% for cliente in clientes.items %}
             {% include "componentes/editar_cliente_modal.html" %}
         {% endfor %}
-            {% include "componentes/adicionar_cliente_modal.html" %}
+        {% include "componentes/adicionar_cliente_modal.html" %}
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('adicionar_cliente_modal')
+
+            modal.addEventListener('hidden.bs.modal', () => {
+                const form = modal.querySelector('form')
+                if (form) {
+                    form.reset()
+                }
+            })
+        })
+        </script>
     </body>
 </html>
