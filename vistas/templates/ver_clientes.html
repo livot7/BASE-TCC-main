@@ -58,9 +58,6 @@
                 </ul>
             </nav>
         </div>
-        {% for cliente in clientes.items %}
-            {% include "componentes/editar_cliente_modal.html" %}
-        {% endfor %}
         {% include "componentes/adicionar_cliente_modal.html" %}
         <script>
         document.addEventListener('DOMContentLoaded', () => {

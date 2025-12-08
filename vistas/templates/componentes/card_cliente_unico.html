@@ -8,7 +8,7 @@
                  class="avatar-cliente"
                  alt="Avatar">
             <div class="flex-grow-1">
-                <div class="nome-cliente">{{ cliente.nome }}</div>
+                <div class="nome-cliente fs-5">{{ cliente.nome }}</div>
             </div>
             <span class="badge-status {% if cliente.tem_acesso %}ativo{% else %}inativo{% endif %} fs-6">
                 {% if cliente.tem_acesso %}
@@ -31,7 +31,7 @@
         </div>
         <!-- Footer -->
         <button type="button"
-                class="card-footer btn btn-editar-cliente"
+                class="card-footer  btn-editar-cliente"
                 data-bs-toggle="modal"
                 data-bs-target="#modalcliente{{ cliente.id }}">
             <i class="bi bi-pencil-square"></i>
