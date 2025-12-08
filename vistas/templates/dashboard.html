@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+        {% include "head_base.html" %}
+    </head>
+    <body>
+        <div class="body-geral">
+            {% include "navbar.html" %}
+            <div class="container mt-5">
+                <div class=" row row-cols-1 row-cols-md-2 g-4">
+                    <div class="col">
+                        <div class="card h-100 sombra">
+                            <img src="{{ grafico_moderador }}" class="card-img-top sombra" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Relação moderadores ativos e inativos</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 sombra">
+                            <img src="{{ grafico_tipo_cliente }}"
+                                 class="card-img-top sombra"
+                                 alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Quantidade de clientes por cargo</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
