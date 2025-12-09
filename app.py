@@ -56,7 +56,7 @@ def preguiça_3():
         novo = Acesso(
             usuario_id=i+1,
             cartao_id=i+1,
-            tipo_acesso="Ativo",
+            tipo_acesso="entrada",
             local="Garagem"
         )
         novo.salvar()

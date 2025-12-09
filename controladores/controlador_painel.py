@@ -34,12 +34,11 @@ def logout():
 @painel_blueprint.route("/painel/historico/<int:pagina>", methods=["GET", "POST"])
 def painel_historico(pagina):
     if request.method == "GET":
-        nomes = Cliente.query.paginate(
-            per_page=10, page=pagina, error_out=False)
-
+        clientes = Cliente.query.all()
         acessos = Acesso.query.paginate(
             per_page=10, page=pagina, error_out=False)
-        return render_template("historico.html", acessos=acessos, page=pagina)
+        mapa_cliente = {cliente.id: cliente for cliente in clientes}
+        return render_template("historico.html", acessos=acessos, page=pagina, mapa_cliente=mapa_cliente)
 
 
 @painel_blueprint.route("/painel/cartoes/<int:pagina>", methods=["GET", "POST"])
