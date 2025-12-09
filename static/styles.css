@@ -508,7 +508,7 @@ footer {
     height: 72px;
     object-fit: cover;
     border-radius: 50%;
-    border: 3px solid #fff;
+    border: 2px solid #68615c;
     box-shadow: 0 10px 10px rgba(0, 0, 0, .35);
 }
 
@@ -683,4 +683,44 @@ footer {
 
 .modal-gradiente-azul {
     background: linear-gradient(to left, #1d7edd, #104477)
+}
+
+.card-dashboard {
+    background: linear-gradient(#000000, #2c2c2c);
+    border: none;
+    opacity: 75%;
+}
+
+
+
+.hover-informacao {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out,
+        filter 0.3s ease-in-out;
+}
+
+
+
+.hover-informacao:hover {
+    transform: scale(1.05);
+}
+
+
+.hover-informacao-pizza {
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out,
+        filter 0.5s ease-in-out;
+}
+
+
+
+.hover-informacao-pizza:hover {
+    transform: scale(1.2);
+}
+
+.vermelho-atencao {
+    background: linear-gradient(#580707, #8A0303);
+    border: none;
+}
+
+.sombra-informacao {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }

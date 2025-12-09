@@ -1,6 +1,7 @@
-from flask import Blueprint, request, render_template, redirect, session, flash
-from modelos import Moderador, Cliente
-
+from flask import Blueprint, request, render_template, redirect, session, flash, send_file
+from modelos import Moderador, Cliente, Acesso, Cartao
+from sqlalchemy import func, cast, Date
+from datetime import date, datetime, timedelta
 import json
 import urllib.parse
 
@@ -24,11 +25,23 @@ def admin_before_request():
 def dashboard():
     grafico_moderador = criar_grafico_moderador()
     grafico_tipo_cliente = criar_grafico_tipo_cliente()
-    return render_template("dashboard.html", grafico_moderador=grafico_moderador, grafico_tipo_cliente=grafico_tipo_cliente)
+    acessos_hoje = pegar_acessos_hoje()
+    print(acessos_hoje)
+    todos_clientes = pegar_todos_clientes()
+    cartoes_ativos_porcentagem = cartoes_ativos()
+    grafico_geral = criar_grafico_geral()
+    return render_template("dashboard.html", grafico_moderador=grafico_moderador, grafico_tipo_cliente=grafico_tipo_cliente,
+                           acessos_hoje=acessos_hoje, todos_clientes=todos_clientes, cartoes_ativos_porcentagem=cartoes_ativos_porcentagem,
+                           grafico_geral=grafico_geral
+                           )
 
 
-def criar_grafico(dicionario_grafico):
-    return f"https://quickchart.io/chart?c={urllib.parse.quote(json.dumps(dicionario_grafico))}"
+def criar_grafico(dicionario_grafico, w=800, h=600):
+    """
+    Cria a URL do QuickChart com parâmetros de largura (w) e altura (h) 
+    para garantir uma boa resolução.
+    """
+    return f"https://quickchart.io/chart?c={urllib.parse.quote(json.dumps(dicionario_grafico))}&w={w}&h={h}"
 
 
 def criar_grafico_moderador():
@@ -99,3 +112,64 @@ def criar_grafico_tipo_cliente():
         }
     }
     return criar_grafico(grafico)
+
+
+def criar_grafico_geral():
+    administradores = Moderador.query.filter_by(admin=True).count()
+    moderadores = Moderador.query.filter_by(admin=False).count()
+    alunos = Cliente.query.filter_by(tipo="aluno").count()
+    professores = Cliente.query.filter_by(tipo="professor").count()
+    visitantes = Cliente.query.filter_by(tipo="visitante").count()
+
+    grafico = {
+        "type": "doughnut",
+        "data": {
+            "datasets": [
+                {
+                    "data": [administradores, moderadores, alunos, professores, visitantes],
+                    "backgroundColor": [
+                        "rgb(255, 99, 132)",
+                        "rgb(255, 159, 64)",
+                        "rgb(255, 205, 86)",
+                        "rgb(75, 192, 192)",
+                        "rgb(54, 162, 235)"
+                    ],
+                    "label": "Dataset 1"
+                }
+            ],
+            "labels": ["Administradores", "Moderadores", "Alunos", "Professores", "Visitantes"]
+        },
+        "options": {
+            "title": {
+                "display": False,
+                "text": "Chart.js Doughnut Chart"
+            }
+        }
+    }
+    return criar_grafico(grafico, w=500, h=300)
+
+
+def pegar_acessos_hoje():
+    hoje = datetime.combine(date.today(), datetime.min.time())
+    amanha = hoje + timedelta(days=1)
+    total_acessos = Acesso.query.filter(
+        Acesso.data_criacao >= hoje,
+        Acesso.data_criacao < amanha
+    ).count()
+
+    return total_acessos
+
+
+def pegar_todos_clientes():
+    clientes = Cliente.query.count()
+    return clientes
+
+
+def cartoes_ativos():
+    inativos = Cartao.query.filter_by(tem_acesso=False).count()
+    total = Cartao.query.count()
+    if total == 0:
+        return 0.0
+    ativos = total - inativos
+    porcentagem = (ativos/total) * 100
+    return porcentagem
