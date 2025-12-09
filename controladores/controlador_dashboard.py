@@ -37,11 +37,7 @@ def dashboard():
 
 
 def criar_grafico(dicionario_grafico, w=800, h=600):
-    """
-    Cria a URL do QuickChart com parâmetros de largura (w) e altura (h) 
-    para garantir uma boa resolução.
-    """
-    return f"https://quickchart.io/chart?c={urllib.parse.quote(json.dumps(dicionario_grafico))}&w={w}&h={h}"
+    return f"https://quickchart.io/chart?c={urllib.parse.quote(json.dumps(dicionario_grafico))}&w={w}&h={h}&format=svg"
 
 
 def criar_grafico_moderador():
@@ -101,6 +97,17 @@ def criar_grafico_tipo_cliente():
             ]
         },
         "options": {
+            "scales": {
+                "yAxes": [
+                    {
+                        "ticks": {
+                            "min": 0,
+                            "max": max(visitantes, alunos, professores) + 1,
+                            "precision": 0,
+                        }
+                    }
+                ]
+            },
             "responsive": True,
             "legend": {
                 "display": False
@@ -146,7 +153,7 @@ def criar_grafico_geral():
             }
         }
     }
-    return criar_grafico(grafico, w=500, h=300)
+    return criar_grafico(grafico, w=400, h=200)
 
 
 def pegar_acessos_hoje():
