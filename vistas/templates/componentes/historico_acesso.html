@@ -1,5 +1,5 @@
 {% for acesso in acessos %}
-    <tr>
+    <tr id="historico">
         <th scope="row">{{ mapa_cliente[acesso.usuario_id]["nome"] }}</th>
         <td>{{ acesso.usuario_id }}</td>
         <td>{{ acesso.local }}</td>

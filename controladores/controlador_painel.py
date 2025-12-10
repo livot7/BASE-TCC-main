@@ -35,10 +35,13 @@ def logout():
 def painel_historico(pagina):
     if request.method == "GET":
         clientes = Cliente.query.all()
-        acessos = Acesso.query.paginate(
-            per_page=10, page=pagina, error_out=False)
+        acessos = Acesso.query.order_by(Acesso.id.desc()).paginate(
+            per_page=10,
+            page=pagina,
+            error_out=False
+        )
         mapa_cliente = {cliente.id: cliente for cliente in clientes}
-        return render_template("historico.html", acessos=acessos, page=pagina, mapa_cliente=mapa_cliente)
+        return render_template("historico.html", acessos=acessos, page=pagina, mapa_cliente=mapa_cliente, clientes=clientes)
 
 
 @painel_blueprint.route("/painel/cartoes/<int:pagina>", methods=["GET", "POST"])
@@ -123,3 +126,19 @@ def adicionar_cliente():
     clientes_totais = Cliente.query.order_by(
         Cliente.id.desc()).paginate(per_page=6, error_out=False)
     return render_template("componentes/card_cliente.html", clientes=clientes_totais)
+
+
+@painel_blueprint.post("/htmx/adicionar_registro")
+def adicionar_registro():
+    id = request.form["seletor"]
+
+    acesso = Acesso(
+        usuario_id=id,
+        local="entrada",
+        cartao_id=211,
+        tipo_acesso="entrada principal"
+    )
+    mapa_cliente = mapa_cliente = {
+        cliente.id: cliente for cliente in Cliente.query.all()}
+    acesso.salvar()
+    return render_template("componentes/historico_acesso.html", acessos=[acesso], mapa_cliente=mapa_cliente)

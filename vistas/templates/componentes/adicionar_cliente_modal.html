@@ -60,7 +60,7 @@
                         <label for="selectTipo" class="form-label fw-semibold text-secondary">
                             <i class="bi bi-tag-fill"></i> Tipo
                         </label>
-                        <select class="form-select form-select-lg border-primary rounded-3"
+                        <select class="form-select form-select-lg border-primary rounded-3 js-example-basic-single"
                                 name="tipo"
                                 id="selectTipo"
                                 required>
@@ -102,11 +102,14 @@
     </div>
 </div>
 <script>
-function fecharModalAdicionarCliente() {
-    var modalEl = document.getElementById('adicionar_cliente_modal');
-    if (!modalEl) return;
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('adicionar_cliente_modal')
 
-    var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-    modal.hide();
-}
+            modal.addEventListener('hidden.bs.modal', () => {
+                const form = modal.querySelector('form')
+                if (form) {
+                    form.reset()
+                }
+            })
+        })
 </script>

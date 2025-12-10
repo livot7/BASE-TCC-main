@@ -8,61 +8,36 @@
             <div class="modal-header border-0 rounded-top-4 modal-gradiente-vermelho text-white">
                 <h1 class="modal-title fs-4 fw-bold d-flex align-items-center gap-3"
                     id="modalLabel">
-                    <i class="bi bi-person-plus text-white fs-3"></i> Adicionar Registro
+                    <span class="material-symbols-outlined fs-2">more_time</span> Adicionar Registro
                 </h1>
                 <button type="button"
                         class="btn-close btn-close-white"
                         data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">
-                <form hx-post="/htmx/adicionar_cliente"
-                      hx-target="#clientes"
-                      hx-swap="innerHTML">
+                <form hx-post="/htmx/adicionar_registro"
+                      hx-target="#historico"
+                      hx-swap="outerHTML">
                     <input type="hidden" name="id_cliente" value="">
-                    <!-- Nome -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary">
-                            <i class="bi bi-person-fill"></i> Nome
-                        </label>
-                        <input type="text"
-                               class="form-control form-control-lg border-primary rounded-3"
-                               name="nome"
-                               required
-                               autofocus>
-                    </div>
-                    <!-- Documento -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">
-                            <i class="bi bi-credit-card-2-back-fill opacity-50"></i> Documento
-                        </label>
-                        <input type="text"
-                               class="form-control form-control-lg border-primary rounded-3"
-                               name="documento"
-                               required>
-                    </div>
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary">
-                            <i class="bi bi-envelope-fill"></i> E-mail
-                        </label>
-                        <input type="email"
-                               class="form-control form-control-lg border-primary rounded-3"
-                               name="email"
-                               required>
-                    </div>
-                    <!-- SELECT2 -->
                     <div class="mb-4">
-                        <label class="form-label fw-semibold text-secondary">
-                            <i class="bi bi-tag-fill"></i> Tipo
+                        <label class="form-label fw-se  mibold text-secondary">
+                            <i class="bi bi-person-circle"></i> Cliente
                         </label>
-                        <select id="selectTipo"
-                                class="form-select form-select-lg border-primary rounded-3 js-select2"
-                                name="tipo"
-                                required>
-                            <option></option>
-                            <option value="aluno">Aluno</option>
-                            <option value="professor">Professor</option>
-                            <option value="visitante">Visitante</option>
+                        <select class="js-example-basic-single form-select form-select-lg border-primary rounded-3"
+                                name="seletor">
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente.id }}">{{ cliente.nome }}- {{ cliente.documento }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-se  mibold text-secondary">
+                            <i class="bi bi-door-open-fill"></i> Entrada/Saída
+                        </label>
+                        <select class="form-select form-select-lg border-primary rounded-3"
+                                name="seletor_tipo">
+                            <option value="entrada">Entrada</option>
+                            <option value="saida">Saída</option>
                         </select>
                     </div>
                     <div class="modal-footer border-0 pt-3 px-0">
@@ -74,7 +49,7 @@
                         <button onclick="fecharModalAdicionarCliente()"
                                 type="submit"
                                 class="btn btn-primary px-4 fw-semibold">
-                            <i class="bi bi-check-lg me-1"></i> Criar Cliente
+                            <i class="bi bi-check-lg me-1"></i> Confirmar Registro
                         </button>
                     </div>
                 </form>
@@ -82,18 +57,33 @@
         </div>
     </div>
 </div>
-<script>$(document).ready(function() {
-    // Inicialização do Select2 para o campo 'selectTipo'
-    $('#selectTipo').select2({
-        // Adiciona um placeholder para aparecer quando nada estiver selecionado
-        placeholder: "Selecione o Tipo", 
-        // Permite que o usuário clique no 'X' para deselecionar a opção
-        allowClear: true, 
-        // **IMPORTANTE para uso em Modal:** // Define o modal como o elemento pai do dropdown para corrigir o z-index e o foco.
-        dropdownParent: $('#adicionar_registro_modal'),
-        // A pesquisa (search) é HABILITADA por padrão, mas você pode garantir o comportamento:
-        // Se quiser que a caixa de pesquisa apareça sempre, use: minimumResultsForSearch: 0
-        minimumResultsForSearch: 0 // Garante que a caixa de pesquisa apareça imediatamente
+<script>
+$(document).ready(function() {
+    
+    if ($.fn.modal) {
+        $.fn.modal.Constructor.prototype._enforceFocus = function() {};
+    }
+
+ 
+    $('#adicionar_registro_modal').on('shown.bs.modal', function () {
+        
+        
+        $('.js-example-basic-single').select2({
+            dropdownParent: $('#adicionar_registro_modal'),
+            theme: 'bootstrap-5'
+        });
     });
+    
+   
 });
+
+function fecharModalAdicionarCliente() {
+    const modalElement = document.getElementById('adicionar_registro_modal');
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (modalInstance) {
+        modalInstance.hide();
+    }
+}
+
+
 </script>

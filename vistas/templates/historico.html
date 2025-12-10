@@ -3,8 +3,11 @@
     <head>
         {% include "head_base.html" %}
         <title>Histórico</title>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+              rel="stylesheet" />
     </head>
     <body>
+        <div id="mensagem-flash" hx-swap-oob="outerHTML">{% include "flashes.html" %}</div>
         <div class="body-geral">
             {% include "navbar.html" %}
             <div class="container mt-5">
