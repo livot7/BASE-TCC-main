@@ -16,8 +16,8 @@
             </div>
             <div class="modal-body p-4">
                 <form hx-post="/htmx/adicionar_registro"
-                      hx-target="#historico"
-                      hx-swap="outerHTML">
+                      hx-target="#resultados-busca"
+                      hx-swap="innerHTML">
                     <input type="hidden" name="id_cliente" value="">
                     <div class="mb-4">
                         <label class="form-label fw-se  mibold text-secondary">

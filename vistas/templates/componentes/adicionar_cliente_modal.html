@@ -19,8 +19,7 @@
             <div class="modal-body p-4">
                 <form hx-post="/htmx/adicionar_cliente"
                       hx-target="#clientes"
-                      hx-swap="innerHTML"
-                      hx-on:htmx:afterSwap="alert('HTMX DISPAROU')">
+                      hx-swap="innerHTML">
                     <input type="hidden" name="id_cliente" value="INJETE_O_ID_AQUI">
                     <div class="mb-3">
                         <label for="inputNome" class="form-label fw-semibold text-secondary">
@@ -112,4 +111,13 @@
                 }
             })
         })
+
+        document.body.addEventListener('htmx:afterRequest', (evt) => {
+    if (evt.detail.target.id === 'clientes') {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('adicionar_cliente_modal'))
+        if (modal) modal.hide()
+    }
+})
+
+        
 </script>

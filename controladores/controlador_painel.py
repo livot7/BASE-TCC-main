@@ -1,7 +1,8 @@
 from flask import Blueprint, request, render_template, redirect, session, flash
 from modelos import Moderador, Cliente, Cartao, Acesso
-from datetime import date
+from datetime import date, datetime, timedelta
 from sqlalchemy import func, or_
+
 
 painel_blueprint = Blueprint(
     "painel", __name__, template_folder="../vistas/templates")
@@ -99,11 +100,23 @@ def buscar_clientes():
 def buscar_acesso():
     pesquisa = request.args.get("pesquisa", "").strip()
     busca = f"%{pesquisa}%"
+    mapa_cliente = {cliente.id: cliente for cliente in Cliente.query.all()}
+    clientes = Cliente.query.filter(Cliente.nome.ilike(busca)).all()
+    ids_clientes = [c.id for c in clientes]
+
     acessos_filtrados = Acesso.query.filter(
-        Acesso.local.ilike(busca)
+        or_(
+            Acesso.usuario_id.in_(ids_clientes),
+            Acesso.local.ilike(busca),
+            Acesso.tipo_acesso.ilike(busca),
+        )
     ).paginate(per_page=10)
-    return render_template("componentes/historico_acesso.html",
-                           acessos=acessos_filtrados)
+
+    return render_template(
+        "componentes/historico_acesso.html",
+        acessos=acessos_filtrados,
+        mapa_cliente=mapa_cliente
+    )
 
 
 @painel_blueprint.post("/htmx/adicionar_cliente")
@@ -131,14 +144,29 @@ def adicionar_cliente():
 @painel_blueprint.post("/htmx/adicionar_registro")
 def adicionar_registro():
     id = request.form["seletor"]
+    local = request.form["seletor_tipo"]
+    cliente = Cliente.query.get_or_404(id)
 
     acesso = Acesso(
         usuario_id=id,
-        local="entrada",
+        local=local,
         cartao_id=211,
-        tipo_acesso="entrada principal"
+        tipo_acesso="entrada principal",
+
     )
+    acesso.salvar()
+    acessos = Acesso.query.order_by(Acesso.id.desc()).paginate(per_page=10)
+    acesso.salvar()
     mapa_cliente = mapa_cliente = {
         cliente.id: cliente for cliente in Cliente.query.all()}
-    acesso.salvar()
-    return render_template("componentes/historico_acesso.html", acessos=[acesso], mapa_cliente=mapa_cliente)
+    html_historico = render_template(
+        "componentes/historico_acesso.html",
+        acessos=acessos,
+        mapa_cliente=mapa_cliente
+    )
+    html_messages = render_template(
+        "componentes/messeges.html",
+        mensagens=[
+            ("success", f"Acesso do cliente {cliente.nome} registrado com sucesso.")]
+    )
+    return html_historico + html_messages

@@ -6,11 +6,11 @@ db = SQLAlchemy()
 
 
 class Modelo(db.Model):
-    __abstract__ = True  # Não é uma tabela de verdade, não salve no banco de dados
+    __abstract__ = True
 
     id = db.Column(db.Integer, primary_key=True)
     data_criacao = db.Column(
-        db.DateTime, default=datetime.utcnow, nullable=False)
+        db.DateTime, default=datetime.now(), nullable=False)
 
     def salvar(self):
         db.session.add(self)

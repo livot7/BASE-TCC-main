@@ -250,7 +250,7 @@ footer {
 
 .flashes {
     position: fixed;
-    top: 20px;
+    top: 120px;
     right: 20px;
     width: 350px;
     z-index: 2000;
@@ -392,19 +392,20 @@ footer {
 
 
 .status-tabela-ativo {
-    width: 60px;
+    width: 7dvh;
     height: 25px;
-    background: linear-gradient(to right, #107922, #194906);
+    background: linear-gradient(to right, #13551d, #1a5503);
     border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 
 .status-tabela-inativo {
-    width: 60px;
+    width: 70px;
     height: 25px;
     background-color: rgb(97, 97, 97);
     border-radius: 10px;
-    justify-self: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
 }
 
@@ -413,6 +414,8 @@ footer {
     height: 25px;
     background-color: #3B82F6;
     border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 
 }
 

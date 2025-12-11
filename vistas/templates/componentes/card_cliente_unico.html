@@ -1,6 +1,5 @@
 <div class="col" id="card-cliente-{{ cliente.id }}">
     <div class="card card-cliente h-100 rounded-4 border-0">
-        <!-- Header -->
         <div class="card-header-cliente d-flex align-items-center gap-3 p-3">
             <img src="https://cataas.com/cat?timestamp={{ cliente.id }}"
                  width="72"
@@ -18,7 +17,6 @@
                 {% endif %}
             </span>
         </div>
-        <!-- Body -->
         <div class="card-body pt-2">
             <div class="campo-info">
                 <i class="bi bi-envelope-fill"></i>
@@ -29,7 +27,6 @@
                 <span class="texto-info">{{ cliente.documento }}</span>
             </div>
         </div>
-        <!-- Footer -->
         <button type="button"
                 class="card-footer  btn-editar-cliente"
                 data-bs-toggle="modal"

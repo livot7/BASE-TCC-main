@@ -9,11 +9,11 @@
             Moderador
         {% endif %}
     </td>
-    <td class="moderador-status text-center">
+    <td class="moderador-status text-center ">
         {% if moderador.ativo %}
-            <div class="fw-bold status-tabela-ativo d-flex justify-content-center align-items-center text-white">Ativo</div>
+            <div class="fw-bold status-tabela-ativo text-white d-inline-block mx-auto">Ativo</div>
         {% else %}
-            <div class="fw-bold status-tabela-inativo d-flex justify-content-center align-items-center text-white">Inativo</div>
+            <div class="fw-bold status-tabela-inativo text-white d-inline-block mx-auto">Inativo</div>
         {% endif %}
     </td>
     <td class="text-center">
@@ -31,6 +31,5 @@
             <i class="bi bi-lock me-1"></i> Alterar senha
         </div>
     </td>
-    <!-- Modal dentro da linha -->
     <td>{% include "componentes/editar_moderador_modal.html" %}</td>
 </tr>

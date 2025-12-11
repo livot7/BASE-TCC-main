@@ -1,15 +1,3 @@
 {% for acesso in acessos %}
-    <tr id="historico">
-        <th scope="row">{{ mapa_cliente[acesso.usuario_id]["nome"] }}</th>
-        <td>{{ acesso.usuario_id }}</td>
-        <td>{{ acesso.local }}</td>
-        <td>
-            {% if acesso.tipo_acesso %}
-                <div class="fw-bold status-tabela-ativo  text-white">Entrada</div>
-            {% else %}
-                <div class="fw-bold status-tabela-inativo  text-white">Saída</div>
-            {% endif %}
-        </td>
-        <td>{{ acesso.data_criacao.strftime("%d/%m/%Y %H:%M:%S") }}</td>
-    </tr>
+    {% include "componentes/acesso_unico.html" with context %}
 {% endfor %}
