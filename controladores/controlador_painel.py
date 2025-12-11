@@ -72,7 +72,14 @@ def editar_cliente(id):
 
     cliente.salvar()
 
-    return render_template("componentes/card_cliente_unico.html", cliente=cliente)
+    html_cliente = render_template(
+        "componentes/card_cliente_unico.html", cliente=cliente)
+
+    html_mensagem = render_template(
+        "componentes/mensagem.html",
+        mensagens=[
+            ("info", f"Cliente {cliente.nome} atualizado com sucesso.")])
+    return html_cliente + html_mensagem
 
 
 @painel_blueprint.route("/htmx/buscar_clientes")
@@ -136,6 +143,7 @@ def adicionar_cliente():
         documento=documento
     )
     cliente.salvar()
+
     clientes_totais = Cliente.query.order_by(
         Cliente.id.desc()).paginate(per_page=6, error_out=False)
     return render_template("componentes/card_cliente.html", clientes=clientes_totais)
@@ -164,9 +172,9 @@ def adicionar_registro():
         acessos=acessos,
         mapa_cliente=mapa_cliente
     )
-    html_messages = render_template(
-        "componentes/messeges.html",
+    html_mensagem = render_template(
+        "componentes/mensagem.html",
         mensagens=[
             ("success", f"Acesso do cliente {cliente.nome} registrado com sucesso.")]
     )
-    return html_historico + html_messages
+    return html_historico + html_mensagem
