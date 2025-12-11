@@ -112,12 +112,13 @@
             })
         })
 
-        document.body.addEventListener('htmx:afterRequest', (evt) => {
-    if (evt.detail.target.id === 'clientes') {
-        const modal = bootstrap.Modal.getInstance(document.getElementById('adicionar_cliente_modal'))
-        if (modal) modal.hide()
-    }
-})
+        function fecharModalAdicionarCliente() {
+            const modalElement = document.getElementById('adicionar_cliente_modal');
+            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+        }
 
         
 </script>
