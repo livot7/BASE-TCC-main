@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, redirect, session, flash
 from modelos import Moderador, Cliente, Cartao, Acesso
 from datetime import date, datetime, timedelta
-from sqlalchemy import func, or_
+from sqlalchemy import func, or_, desc
 
 
 painel_blueprint = Blueprint(
@@ -48,9 +48,14 @@ def painel_historico(pagina):
 @painel_blueprint.route("/painel/cartoes/<int:pagina>", methods=["GET", "POST"])
 def painel_cartao(pagina):
     if request.method == "GET":
-        cartoes = Cartao.query.paginate(
-            per_page=10, page=pagina, error_out=False)
-        return render_template("cartoes.html", cartoes=cartoes, page=pagina)
+        cartoes = Cartao.query.order_by(desc(Cartao.id)).paginate(
+            page=pagina,
+            per_page=10,
+            error_out=False
+        )
+        clientes = Cliente.query.all()
+        mapa_cartao = {cartao.id: cartao for cartao in clientes}
+        return render_template("cartoes.html", cartoes=cartoes, page=pagina, mapa_cartao=mapa_cartao)
 
 
 @painel_blueprint.route("/painel/clientes/<int:pagina>")
@@ -134,7 +139,14 @@ def adicionar_cliente():
     tipo = request.form["tipo"]
 
     if Cliente.query.filter_by(email=email).first():
-        return "<div class='text-danger'>Esse cliente já existe.</div>"
+        clientes_totais = Cliente.query.order_by(
+            Cliente.id.desc()).paginate(per_page=6, error_out=False)
+        html_card_cliente = render_template(
+            "componentes/card_cliente.html", clientes=clientes_totais)
+        html_mensagem = render_template(
+            "componentes/mensagem.html", mensagens=[('danger', 'já existe um cliente cadastrado com este email.')])
+        return html_card_cliente + html_mensagem
+
     cliente = Cliente(
         nome=nome,
         email=email,
@@ -143,10 +155,13 @@ def adicionar_cliente():
         documento=documento
     )
     cliente.salvar()
-
+    html_mensagem = render_template(
+        "componentes/mensagem.html", mensagens=[('success', f'Cliente {cliente.nome} adicionado com sucesso.')])
     clientes_totais = Cliente.query.order_by(
         Cliente.id.desc()).paginate(per_page=6, error_out=False)
-    return render_template("componentes/card_cliente.html", clientes=clientes_totais)
+    html_card_cliente = render_template(
+        "componentes/card_cliente.html", clientes=clientes_totais)
+    return html_card_cliente + html_mensagem
 
 
 @painel_blueprint.post("/htmx/adicionar_registro")
@@ -178,3 +193,20 @@ def adicionar_registro():
             ("success", f"Acesso do cliente {cliente.nome} registrado com sucesso.")]
     )
     return html_historico + html_mensagem
+
+
+@painel_blueprint.get("/htmx/busca_cartao")
+def buscar_cartao():
+    pesquisa = request.args.get("pesquisa", "").strip()
+    busca = f"%{pesquisa}%"
+    clientes_por_nome = Cliente.query.filter(Cliente.nome.ilike(busca)).all()
+    ids_clientes = [c.id for c in clientes_por_nome]
+    cartoes_filtrados = Cartao.query.filter(
+        or_(
+            Cartao.dono_id.in_(ids_clientes),
+            Cartao.chave_cartao.ilike(busca)
+        )
+    ).order_by(Cartao.id.desc()).paginate(per_page=10)
+    clientes = Cliente.query.all()
+    mapa_cartao = {cartao.id: cartao for cartao in clientes}
+    return render_template("componentes/cartao_body.html", cartoes=cartoes_filtrados, mapa_cartao=mapa_cartao)

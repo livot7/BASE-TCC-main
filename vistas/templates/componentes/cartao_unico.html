@@ -1,0 +1,12 @@
+<tr>
+    <th scope="row">{{ mapa_cartao[cartao.dono_id]["nome"] }}</th>
+    <td>{{ cartao.chave_cartao }}</td>
+    <td>{{ cartao.data_criacao.strftime("%d/%m/%Y %H:%M:%S") }}</td>
+    <td>
+        {% if cartao.tem_acesso %}
+            <div class="fw-bold status-tabela-ativo d-flex justify-content-center text-white">Ativo</div>
+        {% else %}
+            <div class="fw-bold status-tabela-inativo d-flex justify-content-center text-white">Inativo</div>
+        {% endif %}
+    </td>
+</tr>
