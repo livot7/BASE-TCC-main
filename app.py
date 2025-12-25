@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_migrate import Migrate
-
 from config import Config
 from modelos.modelo import db
 from modelos import *
@@ -8,9 +7,12 @@ from controladores.controlador_principal import principal_blueprint
 from controladores.controlador_painel import painel_blueprint
 from controladores.controlador_admin import admin_blueprint
 from controladores.controlador_dashboard import dashboard_blueprint
+from extensoes import mail
 
 app = Flask(__name__)
+
 app.config.from_object(Config)
+mail.init_app(app)
 
 # Banco de dados + migração
 db.init_app(app)
@@ -73,7 +75,7 @@ def preguiça_4():
             email=f"paulo{i+1}@gmail.com"
         )
         novo.salvar()
-        print("Clientes criados com sucesso criados")
+        print("Clientes criados")
 
 
 if __name__ == "__main__":
