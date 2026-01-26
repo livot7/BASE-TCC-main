@@ -55,7 +55,7 @@ def painel_cartao(pagina):
         )
         clientes = Cliente.query.all()
         mapa_cartao = {cartao.id: cartao for cartao in clientes}
-        return render_template("cartoes.html", cartoes=cartoes, page=pagina, mapa_cartao=mapa_cartao)
+        return render_template("cartoes.html", cartoes=cartoes, page=pagina, mapa_cartao=mapa_cartao, clientes=clientes)
 
 
 @painel_blueprint.route("/painel/clientes/<int:pagina>")
@@ -116,13 +116,21 @@ def buscar_acesso():
     clientes = Cliente.query.filter(Cliente.nome.ilike(busca)).all()
     ids_clientes = [c.id for c in clientes]
 
-    acessos_filtrados = Acesso.query.filter(
-        or_(
-            Acesso.usuario_id.in_(ids_clientes),
-            Acesso.local.ilike(busca),
-            Acesso.tipo_acesso.ilike(busca),
+    acessos_filtrados = (
+        Acesso.query
+        .order_by(Acesso.id.desc())
+        .filter(
+            or_(
+                Acesso.usuario_id.in_(ids_clientes),
+                Acesso.local.ilike(busca),
+                Acesso.tipo_acesso.ilike(busca),
+            )
         )
-    ).paginate(per_page=10)
+        .paginate(
+            per_page=10,
+            error_out=False
+        )
+    )
 
     return render_template(
         "componentes/historico_acesso.html",

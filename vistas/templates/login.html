@@ -6,7 +6,6 @@
     </head>
     <body>
         <div class="body-login">
-            <a href="/esqueci_a_senha">Teste</a>
             <div class="container d-flex align-items-center justify-content-center">
                 <div class="col-12 col-sm-8 col-md-8 col-lg-6 mx-auto">
                     <div class="sombra d-flex justify-content-center">
@@ -14,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container d-flex align-items-center justify-content-center">
+            <div class="container d-flex align-items-center justify-content-center mt-5">
                 <div class="col-12 col-sm-8 col-md-7 col-lg-5 mx-auto ">
                     {% include "flashes.html" %}
                     <div class="card-login rounded-5 sombra p-4 justify-content-center">
@@ -30,7 +29,7 @@
                                        name="email"
                                        placeholder="Digite seu email:">
                             </div>
-                            <div class="mb-5">
+                            <div class="mb-">
                                 <label for="senha"
                                        class="form-label fs-3 sombra-leve-texto "
                                        style="color: #8A0303">Senha:</label>
@@ -40,16 +39,14 @@
                                        name="senha"
                                        placeholder="Digite sua senha:">
                             </div>
-                            <div class="gap-2 text-center">
+                            <a class="fs-5 fst-italic" href="/esqueci_a_senha">Esqueci minha senha</a>
+                            <div class="gap-2 mt-4 mb-2 text-center">
                                 <button type="submit" class="hover-scale botao">Entrar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <footer class="text-center text-light">
-                <p class="fw-lighter  opacity-25">Todos os direitos reservados @ Verificação Inteligente De Acesso</p>
-            </footer>
         </div>
     </body>
 </div>

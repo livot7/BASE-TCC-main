@@ -75,6 +75,10 @@ def mudar_senha(token):
     if request.method == 'GET':
         return render_template('mudar_senha.html', token=token)
     nova_senha = request.form['senha']
+    nova_senha_confirmar = request.form['senha_confirmar']
+    if nova_senha != nova_senha_confirmar:
+        flash("As senhas não coincidem.", "danger")
+        return redirect(f'/mudar_senha/{token}')
     novo_hash = generate_password_hash(nova_senha)
     moderador = Moderador.query.filter_by(email=email).first()
     moderador.senha_hash = novo_hash

@@ -42,7 +42,14 @@ def editar_moderador(id):
 
     moderador.salvar()
 
-    return render_template("componentes/linha_moderador.html", moderador=moderador)
+    html_moderador = render_template(
+        "componentes/linha_moderador.html", moderador=moderador)
+    html_mensagem = render_template(
+        "componentes/mensagem.html",
+        mensagens=[
+            ("success", f"Informações do moderador {moderador.nome} atualizadas com sucesso.")]
+    )
+    return html_moderador + html_mensagem
 
 
 @admin_blueprint.route("/painel/admin/criar_moderador", methods=["GET", "POST"])

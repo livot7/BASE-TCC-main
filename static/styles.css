@@ -176,6 +176,19 @@ footer {
 
 }
 
+
+.htmx-indicator {
+    display: none;
+}
+
+.htmx-request .htmx-indicator {
+    display: inline-flex;
+}
+
+.htmx-request .htmx-hide {
+    display: none;
+}
+
 /* ---------------------------------------------------- */
 /* 1. ESTILO BASE (.input-busca) */
 /* ---------------------------------------------------- */
