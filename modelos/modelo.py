@@ -10,7 +10,7 @@ class Modelo(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     data_criacao = db.Column(
-        db.DateTime, default=datetime.now(), nullable=False)
+        db.DateTime, default=datetime.now, nullable=False)
 
     def salvar(self):
         db.session.add(self)
