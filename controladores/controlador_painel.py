@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, session, flash
+from flask import Blueprint, request, render_template, redirect, session, flash,jsonify
 from modelos import Moderador, Cliente, Cartao, Acesso
 from datetime import date, datetime, timedelta
 from sqlalchemy import func, or_, desc
@@ -10,6 +10,9 @@ painel_blueprint = Blueprint(
 
 @painel_blueprint.before_request
 def painel_before_request():
+    if request.path.startswith("/teste"):
+        return  # libera sem login
+    
     if session.get("usuario") is None:
         return redirect("/")
 
@@ -218,3 +221,17 @@ def buscar_cartao():
     clientes = Cliente.query.all()
     mapa_cartao = {cartao.id: cartao for cartao in clientes}
     return render_template("componentes/cartao_body.html", cartoes=cartoes_filtrados, mapa_cartao=mapa_cartao)
+
+
+@painel_blueprint.route("/teste", methods=["POST"])
+def teste():
+    cartao_info = request.get_json()
+    id = cartao_info["uid"]
+    cartao = Cartao(
+        dono_id = " ",
+        chave_cartao = id,
+        tem_acesso = False
+    )
+    cartao.salvar()
+    print(f"O cartão {id} foi salvo no banco de dados com sucesso")
+    return jsonify({"ok": True}), 200
