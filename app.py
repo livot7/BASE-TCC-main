@@ -7,6 +7,7 @@ from controladores.controlador_principal import principal_blueprint
 from controladores.controlador_painel import painel_blueprint
 from controladores.controlador_admin import admin_blueprint
 from controladores.controlador_dashboard import dashboard_blueprint
+from controladores.controlador_api import api_blueprint
 from extensoes import mail
 
 app = Flask(__name__)
@@ -23,7 +24,7 @@ app.register_blueprint(principal_blueprint)
 app.register_blueprint(painel_blueprint)
 app.register_blueprint(admin_blueprint)
 app.register_blueprint(dashboard_blueprint)
-
+app.register_blueprint(api_blueprint)
 
 def preguiça():
     for i in range(30):

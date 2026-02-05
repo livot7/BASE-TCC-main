@@ -1,0 +1,103 @@
+<div class="modal fade"
+     id="modalEditar{{ cartao.id }}"
+     tabindex="-1"
+     aria-labelledby="modalLabel{{ cartao.id }}"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0 rounded-4">
+
+      <!-- Cabeçalho -->
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-semibold"
+            id="modalLabel{{ cartao.id }}">Alterar informações do cartão</h5>
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Fechar"></button>
+      </div>
+
+      <!-- Corpo -->
+      <div class="modal-body px-4">
+        <form class="form-update"
+              hx-put="/htmx/editar_cartao/{{ cartao.id }}"
+              hx-target="#linha-cartao-{{ cartao.id }}"
+              hx-swap="outerHTML"
+              hx-trigger="submit">
+
+          <!-- Dado do dono -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Dono do Cartão</label>
+            <select class="form-select form-select-lg rounded-3 select2"
+                    name="dono_id" required>
+              {% for cliente in clientes %}
+                <option value="{{ cliente.id }}"
+                  {% if cliente.id == cartao.dono_id %}selected{% endif %}>
+                  {{ cliente.nome }} - {{ cliente.documento }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Chave de acesso -->
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Chave de acesso</label>
+            <input type="text"
+                   class="form-control form-control-lg rounded-3"
+                   name="chave_cartao"
+                   value="{{ cartao.chave_cartao }}"
+                   required>
+          </div>
+
+          <!-- Permissão de acesso -->
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input"
+                   type="checkbox"
+                   name="tem_acesso"
+                   value="1"
+                   {% if cartao.tem_acesso %}checked{% endif %}>
+            <label class="form-check-label">Tem acesso</label>
+          </div>
+
+          <!-- Rodapé -->
+          <div class="modal-footer border-0 mt-4">
+            <button type="button"
+                    class="btn btn-outline-danger"
+                    data-bs-dismiss="modal">Sair</button>
+            <button type="submit"
+                    class="btn btn-primary">Confirmar alterações</button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+    // Inicializa Select2 dentro do modal
+    $('#modalEditar{{ cartao.id }}').on('shown.bs.modal', function () {
+        $('.select2').select2({
+            theme: 'bootstrap-5',
+            width: '100%',
+            dropdownParent: $('#modalEditar{{ cartao.id }}')
+        });
+    });
+});
+
+// Fecha o modal corretamente após HTMX atualizar a linha
+document.body.addEventListener('htmx:afterSwap', function(evt) {
+    if (evt.detail.target.id === 'linha-cartao-{{ cartao.id }}') {
+        const modalEl = document.getElementById('modalEditar{{ cartao.id }}');
+        if (modalEl) {
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            if (modalInstance) modalInstance.hide();
+
+            // remove backdrop se ainda estiver
+            document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+        }
+    }
+});
+</script>

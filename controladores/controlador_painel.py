@@ -223,15 +223,34 @@ def buscar_cartao():
     return render_template("componentes/cartao_body.html", cartoes=cartoes_filtrados, mapa_cartao=mapa_cartao)
 
 
-@painel_blueprint.route("/teste", methods=["POST"])
-def teste():
-    cartao_info = request.get_json()
-    id = cartao_info["uid"]
-    cartao = Cartao(
-        dono_id = " ",
-        chave_cartao = id,
-        tem_acesso = False
-    )
-    cartao.salvar()
-    print(f"O cartão {id} foi salvo no banco de dados com sucesso")
-    return jsonify({"ok": True}), 200
+
+
+@painel_blueprint.route("/htmx/editar_cartao/<int:cartao_id>", methods=["PUT"])
+def editar_cartao(cartao_id):
+    cartao = Cartao.query.get_or_404(cartao_id)
+    try:
+        dono_id = request.form.get("dono_id", "").strip()
+        chave_cartao = request.form.get("chave_cartao", "").strip()
+        tem_acesso = 'tem_acesso' in request.form
+
+        if dono_id:
+            cartao.dono_id = int(dono_id)
+        if chave_cartao:
+            cartao.chave_cartao = chave_cartao
+        cartao.tem_acesso = tem_acesso
+
+        cartao.salvar()  # ou db.session.commit()
+
+        clientes = Cliente.query.all()
+        mapa_cartao = {cliente.id: cliente for cliente in clientes}
+
+        return render_template("componentes/cartao_unico.html",
+                               cartao=cartao,
+                               mapa_cartao=mapa_cartao)
+
+    except Exception as e:
+        print("Erro ao editar cartão:", e)
+        return jsonify({"status": "erro", "mensagem": str(e)}), 500
+    
+
+
