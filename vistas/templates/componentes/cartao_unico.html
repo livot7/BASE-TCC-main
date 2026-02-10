@@ -33,6 +33,16 @@
             </span>
         </button>
     </td>
+    <td class="text-center">
+    <button 
+        type="button"
+        class="botao-modal fw-bold d-flex justify-content-center align-items-center text-white hover-scale limpar-cartao"
+        hx-post="{{ url_for('painel.limpar_cartao', cartao_id=cartao.id) }}"
+        hx-target="#linha-cartao-{{ cartao.id }}"
+        hx-swap="outerHTML">
+        <i class="bi bi-eraser-fill me-2"></i>Limpar
+    </button>
+</td>
 
     <!-- Modal de edição -->
     <td>{% include "componentes/editar_cartao_modal.html" %}</td>

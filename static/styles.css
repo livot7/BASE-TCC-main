@@ -414,7 +414,7 @@ footer {
 
 
 .status-tabela-ativo {
-    width: 7dvh;
+    width: 70px;
     height: 25px;
     background: linear-gradient(to right, #13551d, #1a5503);
     border-radius: 10px;
@@ -746,4 +746,12 @@ footer {
 
 .sombra-informacao {
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.limpar-cartao {
+    width: 100px;
+    height: 25px;
+    background-color: #c52e2e;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

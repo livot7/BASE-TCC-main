@@ -10,9 +10,6 @@ painel_blueprint = Blueprint(
 
 @painel_blueprint.before_request
 def painel_before_request():
-    if request.path.startswith("/teste"):
-        return  # libera sem login
-    
     if session.get("usuario") is None:
         return redirect("/")
 
@@ -149,13 +146,13 @@ def adicionar_cliente():
     documento = request.form["documento"]
     tipo = request.form["tipo"]
 
-    if Cliente.query.filter_by(email=email).first():
+    if Cliente.query.filter_by(email=email).first() or Cliente.query.filter_by(documento=documento).first():
         clientes_totais = Cliente.query.order_by(
             Cliente.id.desc()).paginate(per_page=6, error_out=False)
         html_card_cliente = render_template(
             "componentes/card_cliente.html", clientes=clientes_totais)
         html_mensagem = render_template(
-            "componentes/mensagem.html", mensagens=[('danger', 'já existe um cliente cadastrado com este email.')])
+            "componentes/mensagem.html", mensagens=[('danger', 'Esse cliente já está cadastrado.')])
         return html_card_cliente + html_mensagem
 
     cliente = Cliente(
@@ -239,7 +236,7 @@ def editar_cartao(cartao_id):
             cartao.chave_cartao = chave_cartao
         cartao.tem_acesso = tem_acesso
 
-        cartao.salvar()  # ou db.session.commit()
+        cartao.salvar()  
 
         clientes = Cliente.query.all()
         mapa_cartao = {cliente.id: cliente for cliente in clientes}
@@ -254,3 +251,11 @@ def editar_cartao(cartao_id):
     
 
 
+@painel_blueprint.route('/cartao/<int:cartao_id>/limpar', methods=['POST'])
+def limpar_cartao(cartao_id):
+    cartao = Cartao.query.get(cartao_id)
+    cartao.tem_acesso = False
+    cartao.dono_id =' '
+    cartao.salvar()
+
+    return render_template('componentes/cartao_unico.html', cartao=cartao)
