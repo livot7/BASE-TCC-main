@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, session, flash, jsonify, url_for
 from modelos import Moderador
-from sqlalchemy import or_
+from sqlalchemy import desc, or_
 
 admin_blueprint = Blueprint(
     "admin", __name__, template_folder="../vistas/templates")
@@ -26,10 +26,21 @@ def painel_admin():
 @admin_blueprint.route("/painel/admin/ver_moderadores/<int:pagina>", methods=["GET", "POST"])
 def painel_ver_moderadores(pagina):
     if request.method == "GET":
-        moderadores = Moderador.query.order_by(Moderador.id).paginate(
-            page=pagina, per_page=10, error_out=False)
+        moderadores = (
+            Moderador.query
+            .order_by(desc(Moderador.id))
+            .paginate(
+                page=pagina,
+                per_page=10,
+                error_out=False
+            )
+        )
 
-        return render_template("ver_moderadores.html", moderadores=moderadores, page=pagina)
+        return render_template(
+            "ver_moderadores.html",
+            moderadores=moderadores,
+            page=pagina
+        )
 
 
 @admin_blueprint.put("/htmx/editar_moderador/<int:id>")
@@ -73,7 +84,7 @@ def painel_criar_moderador():
     )
     moderador.salvar()
     flash(f"Moderador {nome} criado com sucesso", "success")
-    return redirect("/painel/admin")
+    return redirect("/painel/admin/ver_moderadores/1")
 
 
 @admin_blueprint.route("/htmx/buscar_moderadores")
@@ -81,8 +92,19 @@ def buscar_moderadores():
     pesquisa = request.args.get("nome", "").strip()
     busca = f"%{pesquisa}%"
 
-    moderadores_filtrados = Moderador.query.filter(or_(Moderador.nome.ilike(busca),
-                                                       Moderador.email.ilike(
-                                                           busca))).paginate(per_page=10)
+    moderadores_filtrados = (
+        Moderador.query
+        .filter(
+            or_(
+                Moderador.nome.ilike(busca),
+                Moderador.email.ilike(busca)
+            )
+        )
+        .order_by(desc(Moderador.id))
+        .paginate(per_page=10, error_out=False)
+    )
 
-    return render_template("componentes/moderadores_body.html", moderadores=moderadores_filtrados)
+    return render_template(
+        "componentes/moderadores_body.html",
+        moderadores=moderadores_filtrados
+    )

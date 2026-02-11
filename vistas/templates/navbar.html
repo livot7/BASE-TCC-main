@@ -16,27 +16,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav gap-4 d-flex">
-                <a class="text-white hover-scale d-flex align-items-center gap-2 nav-link {{'active' if request.path =='/painel' else ''}}"
+                <a class="text-white hover-scale d-flex align-items-center gap-2 nav-link {{'active' if 'home' in request.path else ''}}"
                    href="/painel">
                     <i class="material-symbols-outlined fs-1">home</i>
                     <span class="fs-4">Home</span>
                 </a>
-                <a class="hover-scale d-flex align-items-center gap-2 nav-link text-white {{'active' if request.path =='/painel/historico' else ''}}"
+                <a class="hover-scale d-flex align-items-center gap-2 nav-link text-white {{'active' if 'histori' in request.path  else ''}}"
                    href="{{ url_for('painel.painel_historico', pagina=1) }}">
                     <i class="material-symbols-outlined fs-1">history</i>
                     <span class="fs-4">Histórico</span>
                 </a>
-                <a class="text-white hover-scale d-flex align-items-center gap-2 nav-link {{'active' if request.path =='/painel/clientes' else ''}}"
+                <a class="text-white hover-scale d-flex align-items-center gap-2 nav-link {{'active' if 'clientes' in request.path else ''}}"
                    href="{{ url_for('painel.painel_clientes', pagina=1) }}">
                     <i class="material-symbols-outlined fs-1">group</i>
                     <span class="fs-4">Clientes</span>
                 </a>
-                <a class="text-white hover-scale d-flex align-items-center gap-2 nav-link {{'active' if request.path =='/painel/cartoes' else ''}}"
+                <a class="text-white hover-scale d-flex align-items-center gap-2 nav-link {{'active' if 'cartoes' in request.path else ''}}"
                    href="{{ url_for('painel.painel_cartao', pagina=1) }}">
                     <i class="material-symbols-outlined fs-1">id_card</i>
                     <span class="fs-4">Cartões</span>
                 </a>
-                <a class="text-white hover-scale d-flex align-items-center gap-2 nav-link {{'active' if request.path =='/painel/admin' else ''}}"
+                <a class="text-white hover-scale d-flex align-items-center gap-2 nav-link {{'active' if 'admin' in request.path else ''}}"
                    href="/painel/admin">
                     <i class="material-symbols-outlined fs-1">shield_person</i>
                     <span class="fs-4">Admin</span>

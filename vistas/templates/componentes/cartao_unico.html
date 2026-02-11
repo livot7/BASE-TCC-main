@@ -6,9 +6,7 @@
             —
         {% endif %}
     </th>
-
     <td>{{ cartao.chave_cartao }}</td>
-
     <td>
         {% if cartao.data_criacao %}
             {{ cartao.data_criacao.strftime("%d/%m/%Y %H:%M:%S") }}
@@ -16,13 +14,15 @@
             —
         {% endif %}
     </td>
-
     <td>
         <div class="fw-bold d-flex justify-content-center text-white {% if cartao.tem_acesso %}status-tabela-ativo{% else %}status-tabela-inativo{% endif %}">
-            {% if cartao.tem_acesso %}Ativo{% else %}Inativo{% endif %}
+            {% if cartao.tem_acesso %}
+                Ativo
+            {% else %}
+                Inativo
+            {% endif %}
         </div>
     </td>
-
     <td class="text-center">
         <button type="button"
                 class="botao-modal"
@@ -34,16 +34,14 @@
         </button>
     </td>
     <td class="text-center">
-    <button 
-        type="button"
-        class="botao-modal fw-bold d-flex justify-content-center align-items-center text-white hover-scale limpar-cartao"
-        hx-post="{{ url_for('painel.limpar_cartao', cartao_id=cartao.id) }}"
-        hx-target="#linha-cartao-{{ cartao.id }}"
-        hx-swap="outerHTML">
-        <i class="bi bi-eraser-fill me-2"></i>Limpar
-    </button>
-</td>
-
+        <button type="button"
+                class="botao-modal fw-bold d-flex justify-content-center align-items-center text-white hover-scale limpar-cartao"
+                hx-post="{{ url_for('painel.limpar_cartao', cartao_id=cartao.id) }}"
+                hx-target="#linha-cartao-{{ cartao.id }}"
+                hx-swap="outerHTML">
+            <i class="bi bi-eraser-fill me-2"></i>Limpar
+        </button>
+    </td>
     <!-- Modal de edição -->
-    <td>{% include "componentes/editar_cartao_modal.html" %}</td>
+    {% include "componentes/editar_cartao_modal.html" %}
 </tr>

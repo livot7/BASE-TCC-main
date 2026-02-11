@@ -39,8 +39,8 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">Numero do cartão</th>
                                     <th scope="col">Proprietário</th>
+                                    <th scope="col">Chave do cartão</th>
                                     <th scope="col">Data de registro</th>
                                     <th scope="col">Status</th>
                                     <th></th>
@@ -73,4 +73,23 @@
         </div>
         {% include "componentes/adicionar_cartao_modal.html" %}
     </body>
+    <script>
+        document.body.addEventListener('htmx:afterRequest', function (evt) {
+
+            const path = evt.detail.requestConfig?.path || '';
+
+            if (!path.startsWith('/htmx/editar_cartao/')) return;
+
+            const modalAberto = document.querySelector('.modal.show');
+            if (!modalAberto) return;
+
+            const instance = bootstrap.Modal.getInstance(modalAberto);
+            if (instance) {
+                instance.hide();
+            }
+            document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style.removeProperty('overflow');
+        });
+    </script>
 </html>

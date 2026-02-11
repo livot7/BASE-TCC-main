@@ -42,17 +42,17 @@
                      id="clientes">{% include "componentes/card_cliente.html" %}</div>
             </div>
             <nav aria-label="page-navegation"
-                 class="d-flex justify-content-center mt-3 ">
+                 class="d-flex justify-content-center mt-3">
                 <ul class="pagination pagination-md d-flex gap-2">
-                    <li class="page-item proximo-e-anterior hover-scale ">
+                    <li class="page-item proximo-e-anterior hover-scale {% if not clientes.has_prev %}disabled opacity-25 pe-none{% endif %}">
                         <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
-                           href="">
+                           href="{{ url_for('painel.painel_clientes', pagina=clientes.prev_num) if clientes.has_prev else '#' }}">
                             <span class="fw-bold fs-6 text-black">Anterior</span>
                         </a>
                     </li>
-                    <li class="page-item proximo-e-anterior hover-scale ">
+                    <li class="page-item proximo-e-anterior hover-scale {% if not clientes.has_next %}disabled opacity-25 pe-none{% endif %}">
                         <a class="d-flex justify-content-center align-items-center w-100 h-100 text-decoration-none"
-                           href="">
+                           href="{{ url_for('painel.painel_clientes', pagina=clientes.next_num) if clientes.has_next else '#' }}">
                             <span class="fw-bold fs-6 text-black">Próximo</span>
                         </a>
                     </li>

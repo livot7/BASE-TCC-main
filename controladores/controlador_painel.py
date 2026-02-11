@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, session, flash,jsonify
+from flask import Blueprint, request, render_template, redirect, session, flash, jsonify, json
 from modelos import Moderador, Cliente, Cartao, Acesso
 from datetime import date, datetime, timedelta
 from sqlalchemy import func, or_, desc
@@ -180,9 +180,9 @@ def adicionar_registro():
 
     acesso = Acesso(
         usuario_id=id,
-        local=local,
+        local="Manual - Paula Gomes",
         cartao_id=211,
-        tipo_acesso="entrada principal",
+        tipo_acesso=local,
 
     )
     acesso.salvar()
@@ -207,19 +207,27 @@ def adicionar_registro():
 def buscar_cartao():
     pesquisa = request.args.get("pesquisa", "").strip()
     busca = f"%{pesquisa}%"
-    clientes_por_nome = Cliente.query.filter(Cliente.nome.ilike(busca)).all()
+
+    clientes_por_nome = Cliente.query.filter(
+        Cliente.nome.ilike(busca)
+    ).all()
+
     ids_clientes = [c.id for c in clientes_por_nome]
+
     cartoes_filtrados = Cartao.query.filter(
         or_(
             Cartao.dono_id.in_(ids_clientes),
             Cartao.chave_cartao.ilike(busca)
         )
     ).order_by(Cartao.id.desc()).paginate(per_page=10)
-    clientes = Cliente.query.all()
-    mapa_cartao = {cartao.id: cartao for cartao in clientes}
-    return render_template("componentes/cartao_body.html", cartoes=cartoes_filtrados, mapa_cartao=mapa_cartao)
 
+    clientes = Cliente.query.order_by(Cliente.nome).all()
 
+    return render_template(
+        "componentes/cartao_body.html",
+        cartoes=cartoes_filtrados,
+        clientes=clientes  # 🔴 ESSENCIAL
+    )
 
 
 @painel_blueprint.route("/htmx/editar_cartao/<int:cartao_id>", methods=["PUT"])
@@ -236,7 +244,7 @@ def editar_cartao(cartao_id):
             cartao.chave_cartao = chave_cartao
         cartao.tem_acesso = tem_acesso
 
-        cartao.salvar()  
+        cartao.salvar()
 
         clientes = Cliente.query.all()
         mapa_cartao = {cliente.id: cliente for cliente in clientes}
@@ -248,14 +256,13 @@ def editar_cartao(cartao_id):
     except Exception as e:
         print("Erro ao editar cartão:", e)
         return jsonify({"status": "erro", "mensagem": str(e)}), 500
-    
 
 
 @painel_blueprint.route('/cartao/<int:cartao_id>/limpar', methods=['POST'])
 def limpar_cartao(cartao_id):
     cartao = Cartao.query.get(cartao_id)
     cartao.tem_acesso = False
-    cartao.dono_id =' '
+    cartao.dono_id = ' '
     cartao.salvar()
 
     return render_template('componentes/cartao_unico.html', cartao=cartao)
